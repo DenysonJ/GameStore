@@ -67,6 +67,5 @@ namespace GameStore
             gm.insert_new_game(new_game);
             Hide();
         }
-
     }
 }
