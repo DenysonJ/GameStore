@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label gameIDLabel;
             this.txt_search = new System.Windows.Forms.TextBox();
             this.Search_btn = new System.Windows.Forms.Button();
             this.chk_opt_RPG = new System.Windows.Forms.CheckBox();
@@ -41,7 +42,24 @@
             this.check_opt_strategy = new System.Windows.Forms.CheckBox();
             this.gamesView = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.storeDatabaseDataSet = new GameStore.storeDatabaseDataSet();
+            this.gameTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gameTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.GameTableTableAdapter();
+            this.tableAdapterManager = new GameStore.storeDatabaseDataSetTableAdapters.TableAdapterManager();
+            this.gameIDLabel1 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            gameIDLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // gameIDLabel
+            // 
+            gameIDLabel.Location = new System.Drawing.Point(0, 0);
+            gameIDLabel.Name = "gameIDLabel";
+            gameIDLabel.Size = new System.Drawing.Size(100, 23);
+            gameIDLabel.TabIndex = 0;
             // 
             // txt_search
             // 
@@ -172,12 +190,64 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // storeDatabaseDataSet
+            // 
+            this.storeDatabaseDataSet.DataSetName = "storeDatabaseDataSet";
+            this.storeDatabaseDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // gameTableTableAdapter
+            // 
+            this.gameTableTableAdapter.ClearBeforeFill = true;
+            // 
+            // tableAdapterManager
+            // 
+            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
+            this.tableAdapterManager.Connection = null;
+            this.tableAdapterManager.FisGameTableTableAdapter = null;
+            this.tableAdapterManager.GameTableTableAdapter = null;
+            this.tableAdapterManager.OperationsTableTableAdapter = null;
+            this.tableAdapterManager.UpdateOrder = GameStore.storeDatabaseDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            this.tableAdapterManager.UserTableTableAdapter = null;
+            // 
+            // gameIDLabel1
+            // 
+            this.gameIDLabel1.Location = new System.Drawing.Point(0, 0);
+            this.gameIDLabel1.Name = "gameIDLabel1";
+            this.gameIDLabel1.Size = new System.Drawing.Size(100, 23);
+            this.gameIDLabel1.TabIndex = 1;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Todas",
+            "Xbox",
+            "Playstation",
+            "PC"});
+            this.comboBox1.Location = new System.Drawing.Point(170, 24);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(89, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Plataforma:";
+            // 
             // Store_iGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(607, 497);
+            this.ClientSize = new System.Drawing.Size(624, 655);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(gameIDLabel);
+            this.Controls.Add(this.gameIDLabel1);
             this.Controls.Add(this.gamesView);
             this.Controls.Add(this.check_opt_strategy);
             this.Controls.Add(this.check_opt_puzzles);
@@ -193,6 +263,8 @@
             this.Text = "ES Games";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_iGUI_FormClosed);
             this.Load += new System.EventHandler(this.Store_iGUI_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,5 +284,12 @@
         private System.Windows.Forms.CheckBox check_opt_strategy;
         private System.Windows.Forms.ListView gamesView;
         private System.Windows.Forms.ImageList imageList1;
+        private storeDatabaseDataSet storeDatabaseDataSet;
+        private System.Windows.Forms.BindingSource gameTableBindingSource;
+        private storeDatabaseDataSetTableAdapters.GameTableTableAdapter gameTableTableAdapter;
+        private storeDatabaseDataSetTableAdapters.TableAdapterManager tableAdapterManager;
+        private System.Windows.Forms.Label gameIDLabel1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label1;
     }
 }
