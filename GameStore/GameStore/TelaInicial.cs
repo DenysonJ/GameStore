@@ -16,6 +16,5 @@ namespace GameStore
 
             insert.Show();
         }
-
     }
 }
