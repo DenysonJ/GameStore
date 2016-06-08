@@ -31,6 +31,7 @@
             this.Login_btn = new System.Windows.Forms.Button();
             this.Password_tb = new System.Windows.Forms.TextBox();
             this.Login_tb = new System.Windows.Forms.TextBox();
+            this.Error = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Login_btn
@@ -64,18 +65,33 @@
             this.Login_tb.Enter += new System.EventHandler(this.Login_tb_Enter);
             this.Login_tb.Leave += new System.EventHandler(this.Login_tb_Leave);
             // 
+            // Error
+            // 
+            this.Error.AutoSize = true;
+            this.Error.ForeColor = System.Drawing.Color.Red;
+            this.Error.Location = new System.Drawing.Point(50, 158);
+            this.Error.Name = "Error";
+            this.Error.Size = new System.Drawing.Size(135, 13);
+            this.Error.TabIndex = 3;
+            this.Error.Text = "Login e/ou senha errado(s)";
+            this.Error.Visible = false;
+            // 
             // Login_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(234, 361);
+            this.Controls.Add(this.Error);
             this.Controls.Add(this.Login_tb);
             this.Controls.Add(this.Password_tb);
             this.Controls.Add(this.Login_btn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "Login_GUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.Login_GUI_Load);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Login_GUI_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -86,6 +102,7 @@
         private System.Windows.Forms.Button Login_btn;
         private System.Windows.Forms.TextBox Password_tb;
         private System.Windows.Forms.TextBox Login_tb;
+        private System.Windows.Forms.Label Error;
     }
 }
 
