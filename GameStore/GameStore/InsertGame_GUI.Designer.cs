@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label platformLabel;
             System.Windows.Forms.Label buyDateLabel;
             System.Windows.Forms.Label ownerLabel;
@@ -42,10 +43,15 @@
             this.owner_comboBox = new System.Windows.Forms.ComboBox();
             this.Avaliation_textBox = new System.Windows.Forms.TextBox();
             this.Available_checkBox = new System.Windows.Forms.CheckBox();
+            this.storeDatabaseDataSet1 = new GameStore.storeDatabaseDataSet();
+            this.userTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.UserTableTableAdapter();
             platformLabel = new System.Windows.Forms.Label();
             buyDateLabel = new System.Windows.Forms.Label();
             ownerLabel = new System.Windows.Forms.Label();
             availableLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // platformLabel
@@ -144,11 +150,14 @@
             // 
             // owner_comboBox
             // 
+            this.owner_comboBox.DataSource = this.userTableBindingSource;
+            this.owner_comboBox.DisplayMember = "Login";
             this.owner_comboBox.FormattingEnabled = true;
             this.owner_comboBox.Location = new System.Drawing.Point(133, 162);
             this.owner_comboBox.Name = "owner_comboBox";
             this.owner_comboBox.Size = new System.Drawing.Size(130, 21);
             this.owner_comboBox.TabIndex = 35;
+            this.owner_comboBox.ValueMember = "UserID";
             // 
             // Avaliation_textBox
             // 
@@ -168,6 +177,20 @@
             this.Available_checkBox.Size = new System.Drawing.Size(15, 14);
             this.Available_checkBox.TabIndex = 37;
             this.Available_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // storeDatabaseDataSet1
+            // 
+            this.storeDatabaseDataSet1.DataSetName = "storeDatabaseDataSet";
+            this.storeDatabaseDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // userTableBindingSource
+            // 
+            this.userTableBindingSource.DataMember = "UserTable";
+            this.userTableBindingSource.DataSource = this.storeDatabaseDataSet1;
+            // 
+            // userTableTableAdapter
+            // 
+            this.userTableTableAdapter.ClearBeforeFill = true;
             // 
             // InsertGame_GUI
             // 
@@ -190,6 +213,8 @@
             this.Controls.Add(this.label_top);
             this.Name = "InsertGame_GUI";
             this.Text = "Inserir Novo Jogo";
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +232,8 @@
         private System.Windows.Forms.ComboBox owner_comboBox;
         private System.Windows.Forms.TextBox Avaliation_textBox;
         private System.Windows.Forms.CheckBox Available_checkBox;
+        private storeDatabaseDataSet storeDatabaseDataSet1;
+        private System.Windows.Forms.BindingSource userTableBindingSource;
+        private storeDatabaseDataSetTableAdapters.UserTableTableAdapter userTableTableAdapter;
     }
 }

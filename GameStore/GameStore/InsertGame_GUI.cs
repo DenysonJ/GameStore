@@ -27,7 +27,7 @@ namespace GameStore
             new_game.image_name = ".\\data\\images\\" + text_imagename.Text;
             gm.insert_new_game(new_game);
             Hide();*/
-            int FisGameId, GameId, ownerId;
+            int FisGameId, GameId;
             bool exist;
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
@@ -44,9 +44,16 @@ namespace GameStore
                 ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };
                 DataRow[] foundRows = ds.Select("Name Like" + name_textBox.Text);
                 if (foundRows.Length == 0)
+                {
+                    GameId = ds.Rows.Count;         //afinal, vai ser inserido no fim
                     exist = false;
+                }
                 else
+                {
+                    GameId = foundRows[0].Field<int>("GameID");
                     exist = true;
+                }
+                FisGameId = ds.Rows.Count;
             }
             catch (Exception ex)
             {
@@ -58,14 +65,15 @@ namespace GameStore
                 connection.Close();
             }
 
-            if (!exist)
+            if (!exist) //se o jogo não existe na gameTable, é necessário abrir a nova janela
             {
                 InsertGame2_GUI insert = new InsertGame2_GUI(name_textBox.Text);
                 insert.Show();
             }
+
             //insere na FisGameTable
             SqlConnection conn = new SqlConnection(strcon);
-            SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values (" + FisGameId.ToString() + "," + GameId.ToString() +"," + Platform_textBox.ToString() +"," + buyDate_dateTimePicker.ToString() +"," + ownerId.ToString() +"," + Avaliation_textBox.Text +","+ Available_checkBox.ToString() + ")", connection);
+            SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values (" + FisGameId.ToString() + "," +  GameId.ToString() +"," + Platform_textBox.Text +"," + buyDate_dateTimePicker.Text +"," + owner_comboBox.SelectedValue.ToString() + "," + Avaliation_textBox.Text +","+ Available_checkBox.ToString() + ")", connection);
             try
             {
                 conn.Open();
