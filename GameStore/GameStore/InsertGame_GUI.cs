@@ -67,7 +67,7 @@ namespace GameStore
 
             if (!exist) //se o jogo não existe na gameTable, é necessário abrir a nova janela
             {
-                InsertGame2_GUI insert = new InsertGame2_GUI(name_textBox.Text);
+                InsertGame2_GUI insert = new InsertGame2_GUI(name_textBox.Text, GameId);
                 insert.Show();
             }
 

@@ -15,11 +15,13 @@ namespace GameStore
     {
         private ushort genre = 0x00;
         private string GameName;
+        private int GameId;
 
-        public InsertGame2_GUI(string name)
+        public InsertGame2_GUI(string name, int id)
         {
             InitializeComponent();
             GameName = name;
+            GameId = id;
         }
 
         private void check_opt_Action_CheckedChanged(object sender, EventArgs e)
@@ -65,11 +67,11 @@ namespace GameStore
         private void button_insertgame_Click(object sender, EventArgs e)
         {
             int FisGameId;      //tem q pegar do openfiledialog
-            Image cover;
+            Image cover = Image.FromFile("..\\..\\Resources\\search_lupa.png");
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(strcon);
-            SqlCommand comm = new SqlCommand("Insert Into GameTable (GameId, Name, Developer, ReleaseYear, Gender, Description, Image) Values (" + FisGameId.ToString() + "," + GameName + "," + Developer_textBox.ToString() + "," + ReleaseYear_textBox.ToString() + "," + genre.ToString() + "," + Description_textBox.Text + "," + cover.ToString() + ")", con);
+            SqlCommand comm = new SqlCommand("Insert Into GameTable (GameId, Name, Developer, ReleaseYear, Gender, Description, Image) Values (" + GameId.ToString() + "," + GameName + "," + Developer_textBox.ToString() + "," + ReleaseYear_textBox.ToString() + "," + genre.ToString() + "," + Description_textBox.Text + "," + cover.ToString() + ")", con);
             try
             {
                 con.Open();
