@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.Store_button = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button_insertgame = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // Store_button
             // 
-            this.button1.Location = new System.Drawing.Point(12, 56);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Store_button.Location = new System.Drawing.Point(12, 56);
+            this.Store_button.Name = "Store_button";
+            this.Store_button.Size = new System.Drawing.Size(75, 23);
+            this.Store_button.TabIndex = 0;
+            this.Store_button.Text = "Loja";
+            this.Store_button.UseVisualStyleBackColor = true;
+            this.Store_button.Click += new System.EventHandler(this.Store_button_Click);
             // 
             // button2
             // 
@@ -68,7 +69,7 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.button_insertgame);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Store_button);
             this.Name = "TelaInicial";
             this.Text = "TelaInicial";
             this.ResumeLayout(false);
@@ -77,7 +78,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Store_button;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button_insertgame;
     }

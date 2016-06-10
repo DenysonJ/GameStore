@@ -22,6 +22,7 @@ namespace GameStore
             InitializeComponent();
             GameName = name;
             GameId = id;
+            this.DialogResult = DialogResult.No;
         }
 
         private void check_opt_Action_CheckedChanged(object sender, EventArgs e)
@@ -65,13 +66,13 @@ namespace GameStore
         }
 
         private void button_insertgame_Click(object sender, EventArgs e)
-        {
-            int FisGameId;      //tem q pegar do openfiledialog
-            Image cover = Image.FromFile("..\\..\\Resources\\search_lupa.png");
+        {     
+            Image cover = Image.FromFile("..\\..\\Resources\\search_lupa.png"); //na real tem q pegar do openfiledialog
+            Console.Write(GameId.ToString() + GameName + "', '" + Developer_textBox.ToString() + "', '" + ReleaseYear_textBox.ToString() + "', '" + genre.ToString() + "', '" + Description_textBox.Text + "', '" + cover.ToString());
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+           string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(strcon);
-            SqlCommand comm = new SqlCommand("Insert Into GameTable (GameId, Name, Developer, ReleaseYear, Gender, Description, Image) Values (" + GameId.ToString() + "," + GameName + "," + Developer_textBox.ToString() + "," + ReleaseYear_textBox.ToString() + "," + genre.ToString() + "," + Description_textBox.Text + "," + cover.ToString() + ")", con);
+            SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values ('" + GameId.ToString() + "','" + GameName + "','" + Developer_textBox.ToString() + "','" + ReleaseYear_textBox.ToString() + "','" + genre.ToString() + "','" + Description_textBox.Text + "','" + cover + "')", con);
             try
             {
                 con.Open();
@@ -86,6 +87,13 @@ namespace GameStore
             {
                 con.Close();
             }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void cancel_button_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

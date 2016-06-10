@@ -88,6 +88,8 @@
             // chk_opt_RPG
             // 
             this.chk_opt_RPG.AutoSize = true;
+            this.chk_opt_RPG.Checked = true;
+            this.chk_opt_RPG.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_opt_RPG.Location = new System.Drawing.Point(529, 232);
             this.chk_opt_RPG.Name = "chk_opt_RPG";
             this.chk_opt_RPG.Size = new System.Drawing.Size(49, 17);
@@ -99,6 +101,8 @@
             // check_opt_Action
             // 
             this.check_opt_Action.AutoSize = true;
+            this.check_opt_Action.Checked = true;
+            this.check_opt_Action.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_Action.Location = new System.Drawing.Point(529, 71);
             this.check_opt_Action.Name = "check_opt_Action";
             this.check_opt_Action.Size = new System.Drawing.Size(51, 17);
@@ -110,6 +114,8 @@
             // check_opt_Adventure
             // 
             this.check_opt_Adventure.AutoSize = true;
+            this.check_opt_Adventure.Checked = true;
+            this.check_opt_Adventure.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_Adventure.Location = new System.Drawing.Point(529, 94);
             this.check_opt_Adventure.Name = "check_opt_Adventure";
             this.check_opt_Adventure.Size = new System.Drawing.Size(69, 17);
@@ -121,6 +127,8 @@
             // check_opt_shooter
             // 
             this.check_opt_shooter.AutoSize = true;
+            this.check_opt_shooter.Checked = true;
+            this.check_opt_shooter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_shooter.Location = new System.Drawing.Point(529, 209);
             this.check_opt_shooter.Name = "check_opt_shooter";
             this.check_opt_shooter.Size = new System.Drawing.Size(63, 17);
@@ -132,6 +140,8 @@
             // check_opt_sports
             // 
             this.check_opt_sports.AutoSize = true;
+            this.check_opt_sports.Checked = true;
+            this.check_opt_sports.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_sports.Location = new System.Drawing.Point(529, 140);
             this.check_opt_sports.Name = "check_opt_sports";
             this.check_opt_sports.Size = new System.Drawing.Size(67, 17);
@@ -143,6 +153,8 @@
             // check_opt_racing
             // 
             this.check_opt_racing.AutoSize = true;
+            this.check_opt_racing.Checked = true;
+            this.check_opt_racing.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_racing.Location = new System.Drawing.Point(529, 117);
             this.check_opt_racing.Name = "check_opt_racing";
             this.check_opt_racing.Size = new System.Drawing.Size(59, 17);
@@ -154,6 +166,8 @@
             // check_opt_puzzles
             // 
             this.check_opt_puzzles.AutoSize = true;
+            this.check_opt_puzzles.Checked = true;
+            this.check_opt_puzzles.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_puzzles.Location = new System.Drawing.Point(529, 186);
             this.check_opt_puzzles.Name = "check_opt_puzzles";
             this.check_opt_puzzles.Size = new System.Drawing.Size(62, 17);
@@ -165,6 +179,8 @@
             // check_opt_strategy
             // 
             this.check_opt_strategy.AutoSize = true;
+            this.check_opt_strategy.Checked = true;
+            this.check_opt_strategy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_strategy.Location = new System.Drawing.Point(529, 163);
             this.check_opt_strategy.Name = "check_opt_strategy";
             this.check_opt_strategy.Size = new System.Drawing.Size(73, 17);

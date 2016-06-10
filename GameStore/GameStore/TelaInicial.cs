@@ -16,5 +16,11 @@ namespace GameStore
 
             insert.Show();
         }
+
+        private void Store_button_Click(object sender, EventArgs e)
+        {
+            Store_iGUI storeform = new Store_iGUI();
+            storeform.ShowDialog();
+        }
     }
 }

@@ -9,8 +9,9 @@ namespace GameStore
 {
     public partial class Store_iGUI : Form
     {
-        public int genre = 0x00;
+        public int genre = 0xFFFF;
         private GameManager game_manager = new GameManager();
+        private int globalimageindex = 0;
 
         public Store_iGUI()
         {
@@ -61,7 +62,7 @@ namespace GameStore
                     ite.SubItems.Add(game.Field<string>("Name"));
                     ite.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
                     ite.SubItems.Add(game.Field<string>("Developer"));
-                    ite.SubItems.Add(genderConverter(game.Field<int>("Gender")));
+                    ite.SubItems.Add(genreConverter(game.Field<int>("Genre")));
                     ite.SubItems.Add(game.Field<string>("Description"));
 
                     gamesView.Items.Add(ite);
@@ -112,7 +113,8 @@ namespace GameStore
                     DataRow[] foundRows;
                     foundRows = dt.Select("Name Like '%" + token + "%'");
                     foreach (DataRow row in foundRows)
-                        final.Add(row);
+                        if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
+                            final.Add(row);
                 }
                 foreach (string token in keywords.Split(' '))    //procura na descrição
                 {
@@ -121,7 +123,8 @@ namespace GameStore
                     
                     foreach (DataRow row in foundRows)
                         if (!final.Contains(row))
-                            final.Add(row);
+                            if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
+                                final.Add(row);
                 }
                 foreach (string token in keywords.Split(' '))    //procura no desenvolvedor
                 {
@@ -130,7 +133,8 @@ namespace GameStore
 
                     foreach (DataRow row in foundRows)
                         if (!final.Contains(row))
-                            final.Add(row);
+                            if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
+                                final.Add(row);
                 }
                 foreach (string token in keywords.Split(' '))    //procura no ano
                 {
@@ -139,8 +143,10 @@ namespace GameStore
 
                     foreach (DataRow row in foundRows)
                         if (!final.Contains(row))
-                            final.Add(row);
+                            if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
+                                final.Add(row);
                 }
+
                 foreach (DataRow game in final)
                 {
                     ShowOnGameView(game.Field<int>("GameID"));
@@ -156,7 +162,7 @@ namespace GameStore
                 connection.Close();
             }
         }
-        private int globalimageindex = 0;
+
         private void ShowOnGameView(int gameid) {   //mostra o jogo no gameview a partir da gameid
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
@@ -178,7 +184,7 @@ namespace GameStore
                 item.SubItems.Add(game.Field<string>("Name"));
                 item.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
                 item.SubItems.Add(game.Field<string>("Developer")); 
-                item.SubItems.Add(genderConverter(game.Field<int>("Gender")));
+                item.SubItems.Add(genreConverter(game.Field<int>("Genre")));
                 item.SubItems.Add(game.Field<string>("Description"));
 
                 gamesView.Items.Add(item);
@@ -195,40 +201,32 @@ namespace GameStore
             }
         }
 
-        private string genderConverter(int gender) { //traduz o gender de int pra string
-            string Gender;
-            switch (gender)
-            {
-                case 0:
-                    Gender = "Ação";
-                    break;
-                case 1:
-                    Gender = "Aventura";
-                    break;
-                case 2:
-                    Gender = "Corrida";
-                    break;
-                case 3:
-                    Gender = "Esportes";
-                    break;
-                case 4:
-                    Gender = "Estratégia";
-                    break;
-                case 5:
-                    Gender = "Puzzles";
-                    break;
-                case 6:
-                    Gender = "Shooter";
-                    break;
-                case 7:
-                    Gender = "RPG";
-                    break;
-                default:
-                    Gender = "none";
-                    break;
-            }
+        private string genreConverter(int genr) { //traduz o gender de int pra string
+            string Genre = "";
+            Console.WriteLine(~Constants.game_type_action);
+            Console.WriteLine(genr);
+            Console.WriteLine((genr | (~Constants.game_type_action)));
+            if (~(genr | (~Constants.game_type_action)) == 0x00)
+                Genre += "Ação ";
+            if (~(genr | (~Constants.game_type_adventure)) == 0x00)
+                Genre += "Aventura ";
+            if (~(genr | (~Constants.game_type_racing)) == 0x00)
+                Genre += "Corrida ";
+            if (~(genr | (~Constants.game_type_sports)) == 0x00)
+                Genre += "Esportes ";
+            if (~(genr | (~Constants.game_type_strategy)) == 0x00)
+                Genre += "Estratégia ";
+            if (~(genr | (~Constants.game_type_puzzle)) == 0x00)
+                Genre += "Puzzle ";
+            if (~(genr | (~Constants.game_type_shooter)) == 0x00)
+                Genre += "Shooter ";
+            if (~(genr | (~Constants.game_type_RPG)) == 0x00)
+                Genre += "RPG ";
+            
+            if(Genre == "")
+                 Genre = "none";
 
-            return Gender;
+            return Genre;
         }
 
         private void check_opt_Action_CheckedChanged(object sender, EventArgs e)

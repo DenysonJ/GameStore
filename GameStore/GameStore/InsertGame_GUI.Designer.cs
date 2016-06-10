@@ -46,12 +46,20 @@
             this.Avaliation_textBox = new System.Windows.Forms.TextBox();
             this.Available_checkBox = new System.Windows.Forms.CheckBox();
             this.userTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.UserTableTableAdapter();
+            this.storeDatabaseDataSet1BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fisGameTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.fisGameTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.FisGameTableTableAdapter();
+            this.userTableBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.cancel_button = new System.Windows.Forms.Button();
             platformLabel = new System.Windows.Forms.Label();
             buyDateLabel = new System.Windows.Forms.Label();
             ownerLabel = new System.Windows.Forms.Label();
             availableLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet1BindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fisGameTableBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // platformLabel
@@ -84,7 +92,7 @@
             // availableLabel
             // 
             availableLabel.AutoSize = true;
-            availableLabel.Location = new System.Drawing.Point(37, 340);
+            availableLabel.Location = new System.Drawing.Point(90, 346);
             availableLabel.Name = "availableLabel";
             availableLabel.Size = new System.Drawing.Size(118, 13);
             availableLabel.TabIndex = 31;
@@ -119,7 +127,7 @@
             // 
             // button_insertgame
             // 
-            this.button_insertgame.Location = new System.Drawing.Point(188, 336);
+            this.button_insertgame.Location = new System.Drawing.Point(188, 379);
             this.button_insertgame.Name = "button_insertgame";
             this.button_insertgame.Size = new System.Drawing.Size(75, 23);
             this.button_insertgame.TabIndex = 20;
@@ -150,15 +158,12 @@
             // 
             // owner_comboBox
             // 
-            this.owner_comboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.userTableBindingSource, "Login", true));
-            this.owner_comboBox.DataSource = this.userTableBindingSource;
-            this.owner_comboBox.DisplayMember = "Login";
+            this.owner_comboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.userTableBindingSource, "UserID", true));
             this.owner_comboBox.FormattingEnabled = true;
             this.owner_comboBox.Location = new System.Drawing.Point(133, 162);
             this.owner_comboBox.Name = "owner_comboBox";
             this.owner_comboBox.Size = new System.Drawing.Size(130, 21);
             this.owner_comboBox.TabIndex = 35;
-            this.owner_comboBox.ValueMember = "UserID";
             // 
             // userTableBindingSource
             // 
@@ -183,7 +188,7 @@
             this.Available_checkBox.AutoSize = true;
             this.Available_checkBox.Checked = true;
             this.Available_checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Available_checkBox.Location = new System.Drawing.Point(16, 339);
+            this.Available_checkBox.Location = new System.Drawing.Point(69, 345);
             this.Available_checkBox.Name = "Available_checkBox";
             this.Available_checkBox.Size = new System.Drawing.Size(15, 14);
             this.Available_checkBox.TabIndex = 37;
@@ -193,11 +198,26 @@
             // 
             this.userTableTableAdapter.ClearBeforeFill = true;
             // 
+            // fisGameTableTableAdapter
+            // 
+            this.fisGameTableTableAdapter.ClearBeforeFill = true;
+            // 
+            // cancel_button
+            // 
+            this.cancel_button.Location = new System.Drawing.Point(40, 379);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(75, 23);
+            this.cancel_button.TabIndex = 38;
+            this.cancel_button.Text = "Cancelar";
+            this.cancel_button.UseVisualStyleBackColor = true;
+            this.cancel_button.Click += new System.EventHandler(this.cancel_button_Click);
+            // 
             // InsertGame_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(283, 379);
+            this.ClientSize = new System.Drawing.Size(283, 424);
+            this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.Available_checkBox);
             this.Controls.Add(this.Avaliation_textBox);
             this.Controls.Add(this.owner_comboBox);
@@ -216,6 +236,9 @@
             this.Text = "Inserir Novo Jogo";
             ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet1BindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fisGameTableBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userTableBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,5 +259,10 @@
         private storeDatabaseDataSet storeDatabaseDataSet1;
         private System.Windows.Forms.BindingSource userTableBindingSource;
         private storeDatabaseDataSetTableAdapters.UserTableTableAdapter userTableTableAdapter;
+        private System.Windows.Forms.BindingSource storeDatabaseDataSet1BindingSource;
+        private System.Windows.Forms.BindingSource fisGameTableBindingSource;
+        private storeDatabaseDataSetTableAdapters.FisGameTableTableAdapter fisGameTableTableAdapter;
+        private System.Windows.Forms.BindingSource userTableBindingSource1;
+        private System.Windows.Forms.Button cancel_button;
     }
 }

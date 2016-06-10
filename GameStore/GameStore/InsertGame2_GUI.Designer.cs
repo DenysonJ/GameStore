@@ -47,6 +47,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Description_textBox = new System.Windows.Forms.TextBox();
+            this.cancel_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label_genre
@@ -140,7 +141,7 @@
             // 
             // button_insertgame
             // 
-            this.button_insertgame.Location = new System.Drawing.Point(201, 416);
+            this.button_insertgame.Location = new System.Drawing.Point(180, 416);
             this.button_insertgame.Name = "button_insertgame";
             this.button_insertgame.Size = new System.Drawing.Size(75, 23);
             this.button_insertgame.TabIndex = 34;
@@ -219,11 +220,22 @@
             this.Description_textBox.Size = new System.Drawing.Size(209, 115);
             this.Description_textBox.TabIndex = 42;
             // 
+            // cancel_button
+            // 
+            this.cancel_button.Location = new System.Drawing.Point(49, 416);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(75, 23);
+            this.cancel_button.TabIndex = 43;
+            this.cancel_button.Text = "Cancelar";
+            this.cancel_button.UseVisualStyleBackColor = true;
+            this.cancel_button.Click += new System.EventHandler(this.cancel_button_Click);
+            // 
             // InsertGame2_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(297, 451);
+            this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.Description_textBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.Title_label);
@@ -270,5 +282,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox Description_textBox;
+        private System.Windows.Forms.Button cancel_button;
     }
 }
