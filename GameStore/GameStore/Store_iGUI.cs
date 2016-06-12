@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace GameStore
@@ -16,6 +18,37 @@ namespace GameStore
         public Store_iGUI()
         {
             InitializeComponent();
+            FillPlatformCombobox();
+            platform_comboBox.SelectedIndex = 0;
+        }
+        private void FillPlatformCombobox()
+        {
+
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable", connection);
+            SqlDataReader reader;
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string name = reader.GetString(4);      //4 is login index in fisgametable
+                    platform_comboBox.Items.Add(name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         private void gamesViewClear() {
@@ -49,16 +82,18 @@ namespace GameStore
                 da.SelectCommand = cmd;
                 da.Fill(ds);
                 ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };
-                
+
                 foreach (DataRow game in ds.Rows) {
                     ListViewItem ite = new ListViewItem();
-                    if (game.Field<Image>("Image") != null)
-                        imageList1.Images.Add(game.Field<Image>("Image"));
+                    if (game.Field<Image>("Image") != null) {
+                        Image cov = Image.FromFile(game.Field<string>("Image"));
+                        imageList1.Images.Add(cov);
+                    }
                     else
                     {
                         imageList1.Images.Add(Image.FromFile("..\\..\\Resources\\null.png"));
                     }
-                    ite.ImageIndex = globalimageindex++;       //pode ser sempre 0 aqui?
+                    ite.ImageIndex = globalimageindex++;
                     ite.SubItems.Add(game.Field<string>("Name"));
                     ite.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
                     ite.SubItems.Add(game.Field<string>("Developer"));
@@ -79,6 +114,18 @@ namespace GameStore
                 connection.Close();
             }
         }
+        private bool checkstatetobool(CheckState chk)
+        {
+            if (chk == CheckState.Checked)
+                return true; 
+            else
+                return false; 
+        }
+
+        private bool availableTest(bool gameav, CheckState chkbox)
+        {
+            return (!checkstatetobool(chkbox))||(gameav && checkstatetobool(chkbox));
+        }
 
         private void Search_btn_Click(object sender, EventArgs e)
         {
@@ -92,65 +139,131 @@ namespace GameStore
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable; SELECT * FROM GameTable", connection);
             try
             {
                 connection.Open();
                 cmd.ExecuteNonQuery();
                 SqlDataAdapter da = new SqlDataAdapter();
-                DataTable ds = new DataTable();
+                DataSet ds = new DataSet();
                 da.SelectCommand = cmd;
                 da.Fill(ds);
-                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };
+                ds.Tables[1].PrimaryKey = new DataColumn[] { ds.Tables[1].Columns["GameID"] };
                 List<DataRow> final = new List<DataRow>();
-                DataTable dt = ds.Clone();
-                dt.Columns["ReleaseYear"].DataType = typeof(string);
-                foreach (DataRow row in ds.Rows){
-                    dt.ImportRow(row);
+                DataTable Gamedt = ds.Tables[1].Clone();
+                Gamedt.Columns["ReleaseYear"].DataType = typeof(string);
+                foreach (DataRow row in ds.Tables[1].Rows)
+                {
+                    Gamedt.ImportRow(row);
                 }
+
                 foreach (string token in keywords.Split(' '))      //procura no nome
                 {  
                     DataRow[] foundRows;
-                    foundRows = dt.Select("Name Like '%" + token + "%'");
+                    foundRows = Gamedt.Select("Name Like '%" + token + "%'");
                     foreach (DataRow row in foundRows)
                         if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
-                            final.Add(row);
+                        {
+                            bool temfis = false;
+                            foreach (DataRow fisgame in ds.Tables[0].Rows)
+                            {
+                                Console.WriteLine(fisgame.Field<bool>("Available") + " - " + AvailableOnly_checkBox.CheckState);
+                                if (fisgame.Field<int>("GameId") == row.Field<int>("GameID") && availableTest(fisgame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisgame.Field<string>("Platform") == platform_comboBox.Text))
+                                {//procura pela tabela de games físicos: se for o id correto E estiver disponível caso isto tenha sido pedido E for a plataforma correta se isso tb foi pedido, coloca na tela
+                                    Console.WriteLine("passou");
+                                    temfis = true;
+                                }
+                                else
+                                    Console.WriteLine("não passou");
+                                if (temfis)
+                                {
+                                    Console.WriteLine("added");
+                                    final.Add(row);
+                                    break;
+                                }
+                            }
+                        }
                 }
                 foreach (string token in keywords.Split(' '))    //procura na descrição
                 {
                     DataRow[] foundRows;
-                    foundRows = dt.Select("Description Like '%" + token + "%'");
+                    foundRows = Gamedt.Select("Description Like '%" + token + "%'");
                     
                     foreach (DataRow row in foundRows)
                         if (!final.Contains(row))
                             if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
-                                final.Add(row);
+                            {
+                                bool temfis = false;
+                                foreach (DataRow fisgame in ds.Tables[0].Rows)
+                                {
+                                    if (fisgame.Field<int>("GameId") == row.Field<int>("GameID") && availableTest(fisgame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisgame.Field<string>("Platform") == platform_comboBox.Text))
+                                    {
+                                        temfis = true;
+                                    }
+                                    if (temfis)
+                                    {
+                                        final.Add(row);
+                                        break;
+                                    }
+                                }
+                            }
                 }
                 foreach (string token in keywords.Split(' '))    //procura no desenvolvedor
                 {
                     DataRow[] foundRows;
-                    foundRows = dt.Select("Developer Like '%" + token + "%'");
+                    foundRows = Gamedt.Select("Developer Like '%" + token + "%'");
 
                     foreach (DataRow row in foundRows)
                         if (!final.Contains(row))
                             if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
-                                final.Add(row);
+                            {
+                                bool temfis = false;
+                                foreach (DataRow fisgame in ds.Tables[0].Rows)
+                                {
+                                    if (fisgame.Field<int>("GameId") == row.Field<int>("GameID") && availableTest(fisgame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisgame.Field<string>("Platform") == platform_comboBox.Text))
+                                    {
+                                        temfis = true;
+                                        break;
+                                    }
+                                    if (temfis)
+                                    {
+                                        final.Add(row);
+                                        break;
+                                    }
+                                }
+                            }
                 }
                 foreach (string token in keywords.Split(' '))    //procura no ano
                 {
                     DataRow[] foundRows;
-                    foundRows = dt.Select("ReleaseYear Like '%" + token + "%'");
+                    foundRows = Gamedt.Select("ReleaseYear Like '%" + token + "%'");
 
                     foreach (DataRow row in foundRows)
                         if (!final.Contains(row))
                             if (!((row.Field<int>("Genre") != 0x0) && (row.Field<int>("Genre") & genre) == 0x0))
-                                final.Add(row);
+                            {
+                                bool temfis = false;
+                                foreach (DataRow fisgame in ds.Tables[0].Rows)
+                                {
+                                    if (fisgame.Field<int>("GameId") == row.Field<int>("GameID") && availableTest(fisgame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisgame.Field<string>("Platform") == platform_comboBox.Text))
+                                    {
+                                        temfis = true;
+                                        break;
+                                    }
+                                    if (temfis)
+                                    {
+                                        final.Add(row);
+                                        break;
+                                    }
+                                }
+                            }
                 }
 
                 foreach (DataRow game in final)
                 {
                     ShowOnGameView(game.Field<int>("GameID"));
                 }
+
             }
             catch (Exception ex)
             {
@@ -203,9 +316,6 @@ namespace GameStore
 
         private string genreConverter(int genr) { //traduz o gender de int pra string
             string Genre = "";
-            Console.WriteLine(~Constants.game_type_action);
-            Console.WriteLine(genr);
-            Console.WriteLine((genr | (~Constants.game_type_action)));
             if (~(genr | (~Constants.game_type_action)) == 0x00)
                 Genre += "Ação ";
             if (~(genr | (~Constants.game_type_adventure)) == 0x00)
@@ -286,6 +396,5 @@ namespace GameStore
             if (txt_search.Text == string.Empty)
                 txt_search.Text = "Digite o nome do jogo";
         }
-
     }
 }

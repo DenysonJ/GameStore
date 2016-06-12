@@ -16,6 +16,7 @@ namespace GameStore
         private ushort genre = 0x00;
         private string GameName;
         private int GameId;
+        private Bitmap cover = null;
 
         public InsertGame2_GUI(string name, int id)
         {
@@ -66,13 +67,10 @@ namespace GameStore
         }
 
         private void button_insertgame_Click(object sender, EventArgs e)
-        {     
-            Image cover = Image.FromFile("..\\..\\Resources\\search_lupa.png"); //na real tem q pegar do openfiledialog
-            Console.Write(GameId.ToString() + GameName + "', '" + Developer_textBox.ToString() + "', '" + ReleaseYear_textBox.ToString() + "', '" + genre.ToString() + "', '" + Description_textBox.Text + "', '" + cover.ToString());
-
+        {
            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(strcon);
-            SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values ('" + GameId.ToString() + "','" + GameName + "','" + Developer_textBox.ToString() + "','" + ReleaseYear_textBox.ToString() + "','" + genre.ToString() + "','" + Description_textBox.Text + "','" + cover + "')", con);
+            SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values ('" + GameId.ToString() + "','" + GameName + "','" + Developer_textBox.Text + "','" + ReleaseYear_textBox.Text + "','" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName +"');", con);
             try
             {
                 con.Open();
@@ -94,6 +92,15 @@ namespace GameStore
         private void cancel_button_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(capa_openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                cover = new Bitmap(capa_openFileDialog.FileName);
+                cover_pictureBox.Image = cover;
+            }
         }
     }
 }

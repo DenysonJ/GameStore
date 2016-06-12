@@ -47,8 +47,9 @@
             this.gameTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.GameTableTableAdapter();
             this.tableAdapterManager = new GameStore.storeDatabaseDataSetTableAdapters.TableAdapterManager();
             this.gameIDLabel1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.platform_comboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.AvailableOnly_checkBox = new System.Windows.Forms.CheckBox();
             gameIDLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).BeginInit();
@@ -56,7 +57,7 @@
             // 
             // gameIDLabel
             // 
-            gameIDLabel.Location = new System.Drawing.Point(0, 0);
+            gameIDLabel.Location = new System.Drawing.Point(60, 12);
             gameIDLabel.Name = "gameIDLabel";
             gameIDLabel.Size = new System.Drawing.Size(100, 23);
             gameIDLabel.TabIndex = 0;
@@ -227,32 +228,41 @@
             // 
             // gameIDLabel1
             // 
-            this.gameIDLabel1.Location = new System.Drawing.Point(0, 0);
+            this.gameIDLabel1.Location = new System.Drawing.Point(60, 12);
             this.gameIDLabel1.Name = "gameIDLabel1";
             this.gameIDLabel1.Size = new System.Drawing.Size(100, 23);
             this.gameIDLabel1.TabIndex = 1;
             // 
-            // comboBox1
+            // platform_comboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Todas",
-            "Xbox",
-            "Playstation",
-            "PC"});
-            this.comboBox1.Location = new System.Drawing.Point(170, 24);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 12;
+            this.platform_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.platform_comboBox.FormattingEnabled = true;
+            this.platform_comboBox.Items.AddRange(new object[] {
+            "Todas"});
+            this.platform_comboBox.Location = new System.Drawing.Point(187, 22);
+            this.platform_comboBox.MaxDropDownItems = 100;
+            this.platform_comboBox.Name = "platform_comboBox";
+            this.platform_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.platform_comboBox.TabIndex = 12;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(89, 27);
+            this.label1.Location = new System.Drawing.Point(121, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 13;
             this.label1.Text = "Plataforma:";
+            // 
+            // AvailableOnly_checkBox
+            // 
+            this.AvailableOnly_checkBox.AutoSize = true;
+            this.AvailableOnly_checkBox.Location = new System.Drawing.Point(350, 47);
+            this.AvailableOnly_checkBox.Name = "AvailableOnly_checkBox";
+            this.AvailableOnly_checkBox.Size = new System.Drawing.Size(121, 17);
+            this.AvailableOnly_checkBox.TabIndex = 18;
+            this.AvailableOnly_checkBox.Text = "Apenas Disponíveis";
+            this.AvailableOnly_checkBox.UseVisualStyleBackColor = true;
             // 
             // Store_iGUI
             // 
@@ -260,8 +270,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(624, 655);
+            this.Controls.Add(this.AvailableOnly_checkBox);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.platform_comboBox);
             this.Controls.Add(gameIDLabel);
             this.Controls.Add(this.gameIDLabel1);
             this.Controls.Add(this.gamesView);
@@ -305,7 +316,8 @@
         private storeDatabaseDataSetTableAdapters.GameTableTableAdapter gameTableTableAdapter;
         private storeDatabaseDataSetTableAdapters.TableAdapterManager tableAdapterManager;
         private System.Windows.Forms.Label gameIDLabel1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox platform_comboBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox AvailableOnly_checkBox;
     }
 }

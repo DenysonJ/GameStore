@@ -159,6 +159,7 @@
             // owner_comboBox
             // 
             this.owner_comboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.userTableBindingSource, "UserID", true));
+            this.owner_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.owner_comboBox.FormattingEnabled = true;
             this.owner_comboBox.Location = new System.Drawing.Point(133, 162);
             this.owner_comboBox.Name = "owner_comboBox";
