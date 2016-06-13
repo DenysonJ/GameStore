@@ -28,3 +28,6 @@ C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\Ga
 C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.Store_iGUI.resources
 C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.TelaInicial.resources
 C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.csproj.GenerateResource.Cache
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.deleteUser_GUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.newUser_GUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.store_iGUI2.resources

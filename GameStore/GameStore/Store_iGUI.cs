@@ -24,7 +24,7 @@ namespace GameStore
         private void FillPlatformCombobox()
         {
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable", connection);
             SqlDataReader reader;
@@ -70,7 +70,7 @@ namespace GameStore
 
             gamesViewClear();
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
             try
@@ -137,7 +137,7 @@ namespace GameStore
             }
             gamesViewClear();
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable; SELECT * FROM GameTable", connection);
             try
@@ -278,7 +278,7 @@ namespace GameStore
 
         private void ShowOnGameView(int gameid) {   //mostra o jogo no gameview a partir da gameid
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
             try
@@ -399,7 +399,8 @@ namespace GameStore
 
         private void ShowGame_button_Click(object sender, EventArgs e)
         {
-
+            store_iGUI2 cont = new store_iGUI2();
+            cont.ShowDialog();
         }
     }
 }
