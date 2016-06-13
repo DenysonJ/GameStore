@@ -19,7 +19,7 @@ namespace GameStore
 
         private void FillOwnerCombobox() {
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM UserTable", connection);
             SqlDataReader reader;
@@ -67,7 +67,7 @@ namespace GameStore
             }
 
             Console.Write(name);
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
             try

@@ -68,7 +68,7 @@ namespace GameStore
 
         private void button_insertgame_Click(object sender, EventArgs e)
         {
-           string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(strcon);
             SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values ('" + GameId.ToString() + "','" + GameName + "','" + Developer_textBox.Text + "','" + ReleaseYear_textBox.Text + "','" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName +"');", con);
             try

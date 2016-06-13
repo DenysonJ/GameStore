@@ -50,6 +50,7 @@
             this.platform_comboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.AvailableOnly_checkBox = new System.Windows.Forms.CheckBox();
+            this.ShowGame_button = new System.Windows.Forms.Button();
             gameIDLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).BeginInit();
@@ -264,12 +265,23 @@
             this.AvailableOnly_checkBox.Text = "Apenas Disponíveis";
             this.AvailableOnly_checkBox.UseVisualStyleBackColor = true;
             // 
+            // ShowGame_button
+            // 
+            this.ShowGame_button.Location = new System.Drawing.Point(434, 524);
+            this.ShowGame_button.Name = "ShowGame_button";
+            this.ShowGame_button.Size = new System.Drawing.Size(75, 23);
+            this.ShowGame_button.TabIndex = 19;
+            this.ShowGame_button.Text = "Mostrar Jogos";
+            this.ShowGame_button.UseVisualStyleBackColor = true;
+            this.ShowGame_button.Click += new System.EventHandler(this.ShowGame_button_Click);
+            // 
             // Store_iGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(624, 655);
+            this.Controls.Add(this.ShowGame_button);
             this.Controls.Add(this.AvailableOnly_checkBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.platform_comboBox);
@@ -319,5 +331,6 @@
         private System.Windows.Forms.ComboBox platform_comboBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox AvailableOnly_checkBox;
+        private System.Windows.Forms.Button ShowGame_button;
     }
 }
