@@ -5,25 +5,40 @@ namespace GameStore
 {
     public partial class Login_GUI : Form
     {
-        
+
+        public string user { get; set; }
 
         public Login_GUI()
         {
             InitializeComponent();
         }
 
+        private void Login_GUI_Load(object sender, EventArgs e)
+        {
+            AcceptButton = Login_btn; //When user press Enter this button is clicked
+        }
+
         private void Login_btn_Click(object sender, EventArgs e)
         {
-            if(Login_tb.Text == "admin")
+            string password = Password_tb.Text;
+            user = Login_tb.Text;
+
+            if (Login_tb.Text == "admin")
             {
                 DialogResult = DialogResult.OK;
+                Close();
+            }
+            else if(true) //trocar por if(password == passwordPegoNoBancoDeDados)
+            {
+                DialogResult = DialogResult.Yes;
+                Close();
             }
             else
             {
-                DialogResult = DialogResult.Yes;
+                Error.Visible = true;
+                DialogResult = DialogResult.No;
             }
             
-            Close();
 
         }
 
@@ -54,5 +69,12 @@ namespace GameStore
             }
         }
 
+        private void Login_GUI_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == 27)
+            {
+                Close();
+            }
+        }
     }
 }
