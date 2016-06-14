@@ -14,14 +14,24 @@ namespace GameStore
     public partial class store_iGUI2 : Form
     {
         private bool adminModeOn = false;
+        private bool adminRemoveOn = false;
         private int GameID, receiverID;
+        private List<int> indexer = new List<int>();
         public store_iGUI2(int user, int GameId, int platformindex, bool availableonly)
         {
             InitializeComponent();
             if (user == -1)
+            {
                 adminModeOn = true;
-            else
+            }
+            else if(user >= 0)
+            {
                 receiverID = user;
+            }
+            else if (user == -2)
+            {
+                adminRemoveOn = true;
+            }
             GameID = GameId;
             fillplatCombobox();
             platform_comboBox.SelectedIndex = platformindex;
@@ -36,6 +46,10 @@ namespace GameStore
                 receiver_comboBox.Visible = true;
                 receiver_label.Visible = true;
                 fillreceiverCombobox();
+            }
+            if (adminRemoveOn)
+            {
+                rentGame_button.Text = "Excluir Jogo";
             }
         }
         private void fillreceiverCombobox()
@@ -198,6 +212,7 @@ namespace GameStore
         private void SearchAndShow()
         {
             gamesViewClear();
+            indexer.Clear();
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
@@ -231,9 +246,9 @@ namespace GameStore
                             ite.SubItems.Add("Indisponível.");
 
                         gamesView.Items.Add(ite);
+                        indexer.Add(fisGame.Field<int>("FisGameID"));
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -256,38 +271,19 @@ namespace GameStore
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("UPDATE FisGameTable SET Available=False WHERE FisGameID="  +";", connection);
+            SqlCommand cmd = new SqlCommand("DELETE FROM FisGameTable WHERE FisGameId = '" + indexer[gamesView.SelectedIndices[0]].ToString() + "';", connection);
+            //SqlCommand cmd = new SqlCommand("DELETE FROM FisGameTable WHERE FisGameId = '1';", connection);
             try
             {
-                connection.Open();
-                cmd.ExecuteNonQuery();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-                da.SelectCommand = cmd;
-                da.Fill(ds);
-                ds.Tables[1].PrimaryKey = new DataColumn[] { ds.Tables[1].Columns["UserID"] };
-
-                foreach (DataRow fisGame in ds.Tables[0].Rows)
-                {
-                    if (fisGame.Field<int>("GameId") == GameID && availableTest(fisGame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisGame.Field<string>("Platform") == platform_comboBox.Text))
-                    {
-                        ListViewItem ite = new ListViewItem();
-                        DataRow user = ds.Tables[1].Rows.Find(fisGame.Field<int>("Owner"));
-                        ite.SubItems.Add(user.Field<string>("Login"));
-                        ite.SubItems.Add(fisGame.Field<string>("Platform"));
-                        if (fisGame.Field<DateTime?>("BuyDate").HasValue)
-                            ite.SubItems.Add(fisGame.Field<DateTime>("BuyDate").ToShortDateString());
-                        else
-                            ite.SubItems.Add("Não fornecido.");
-                        ite.SubItems.Add(fisGame.Field<string>("Avaliation"));
-                        if (fisGame.Field<bool>("Available"))
-                            ite.SubItems.Add("Disponível.");
-                        else
-                            ite.SubItems.Add("Indisponível.");
-
-                        gamesView.Items.Add(ite);
-                    }
-                }
+               connection.Open();
+               cmd.ExecuteNonQuery();
+                /*
+               SqlDataAdapter da = new SqlDataAdapter();
+               DataSet ds = new DataSet();
+               da.SelectCommand = cmd;
+               da.Fill(ds);
+               ds.Tables[0].PrimaryKey = new DataColumn[] { ds.Tables[0].Columns["UserID"] };
+               */
 
             }
             catch (Exception ex)
@@ -299,6 +295,7 @@ namespace GameStore
             {
                 connection.Close();
             }
+            SearchAndShow();
         }
     }
 }
