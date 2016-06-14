@@ -48,7 +48,7 @@
             // 
             // rentGame_button
             // 
-            this.rentGame_button.Location = new System.Drawing.Point(414, 512);
+            this.rentGame_button.Location = new System.Drawing.Point(430, 512);
             this.rentGame_button.Name = "rentGame_button";
             this.rentGame_button.Size = new System.Drawing.Size(75, 23);
             this.rentGame_button.TabIndex = 36;
@@ -59,7 +59,7 @@
             // AvailableOnly_checkBox
             // 
             this.AvailableOnly_checkBox.AutoSize = true;
-            this.AvailableOnly_checkBox.Location = new System.Drawing.Point(418, 203);
+            this.AvailableOnly_checkBox.Location = new System.Drawing.Point(430, 192);
             this.AvailableOnly_checkBox.Name = "AvailableOnly_checkBox";
             this.AvailableOnly_checkBox.Size = new System.Drawing.Size(121, 17);
             this.AvailableOnly_checkBox.TabIndex = 35;
@@ -70,7 +70,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(223, 207);
+            this.label1.Location = new System.Drawing.Point(237, 195);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 34;
@@ -82,7 +82,7 @@
             this.platform_comboBox.FormattingEnabled = true;
             this.platform_comboBox.Items.AddRange(new object[] {
             "Todas"});
-            this.platform_comboBox.Location = new System.Drawing.Point(289, 202);
+            this.platform_comboBox.Location = new System.Drawing.Point(303, 190);
             this.platform_comboBox.MaxDropDownItems = 100;
             this.platform_comboBox.Name = "platform_comboBox";
             this.platform_comboBox.Size = new System.Drawing.Size(121, 21);
@@ -186,8 +186,6 @@
             // 
             this.receiver_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.receiver_comboBox.FormattingEnabled = true;
-            this.receiver_comboBox.Items.AddRange(new object[] {
-            "Todas"});
             this.receiver_comboBox.Location = new System.Drawing.Point(195, 514);
             this.receiver_comboBox.MaxDropDownItems = 100;
             this.receiver_comboBox.Name = "receiver_comboBox";

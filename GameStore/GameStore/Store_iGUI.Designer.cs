@@ -282,7 +282,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(624, 655);
+            this.ClientSize = new System.Drawing.Size(615, 557);
             this.Controls.Add(this.ShowGame_button);
             this.Controls.Add(this.AvailableOnly_checkBox);
             this.Controls.Add(this.label1);
@@ -300,6 +300,7 @@
             this.Controls.Add(this.chk_opt_RPG);
             this.Controls.Add(this.Search_btn);
             this.Controls.Add(this.txt_search);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Store_iGUI";
             this.Text = "ES Games";
             this.Load += new System.EventHandler(this.Store_iGUI_Load);

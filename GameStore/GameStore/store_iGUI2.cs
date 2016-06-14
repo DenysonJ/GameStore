@@ -52,7 +52,7 @@ namespace GameStore
                 while (reader.Read())
                 {
                         string name = reader.GetString(9);      //9 is Login index in fisgametable
-                        platform_comboBox.Items.Add(name);
+                        receiver_comboBox.Items.Add(name);
                 }
             }
             catch (Exception ex)
