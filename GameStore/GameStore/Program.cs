@@ -30,7 +30,8 @@ namespace GameStore
             }
             else if (login.DialogResult == DialogResult.Yes)
             {       //user
-                Store_iGUI store = new Store_iGUI();
+
+                Store_iGUI store = new Store_iGUI(1);
                 Application.Run(store);
             }
 
