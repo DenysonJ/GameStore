@@ -19,7 +19,7 @@ namespace GameStore
 
         private void FillOwnerCombobox() {
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM UserTable", connection);
             SqlDataReader reader;
@@ -46,18 +46,16 @@ namespace GameStore
 
         }
 
+        private bool checkstatetobool(CheckState chk)
+        {
+            if (chk == CheckState.Checked)
+                return true;
+            else
+                return false;
+        }
+
         private void button_insertgame_Click(object sender, EventArgs e)
         {
-            /*
-            Games new_game = new Games();
-            new_game.name = text_game_name.Text;
-            new_game.releaseYear = int.Parse(text_releaseyear.Text);
-            new_game.gameAge = int.Parse(text_gameage.Text);
-            new_game.description = text_description.Text;
-            new_game.genre = genre;
-            new_game.image_name = ".\\data\\images\\" + text_imagename.Text;
-            gm.insert_new_game(new_game);
-            Hide();*/
             int FisGameId, GameId;
             bool exist;
 
@@ -67,7 +65,7 @@ namespace GameStore
             }
 
             Console.Write(name);
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\Vmrfreitas\\Desktop\\ \\Meus Programas\\Game Store\\game-store\\GameStore\\GameStore\\storeDatabase.mdf;Integrated Security=True";
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
             try
@@ -110,19 +108,11 @@ namespace GameStore
                     this.Close();
             }
 
-            Console.Write( FisGameId.ToString());
-            Console.Write( GameId.ToString());
-            Console.Write( Platform_textBox.Text);
-            Console.Write(buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd"));
-            Console.Write( owner_comboBox.SelectedIndex.ToString());
-            Console.Write( Available_checkBox.Checked);
-            Console.Write( Avaliation_textBox.Text);
-
-
+            Console.WriteLine(FisGameId.ToString() + "','" + GameId.ToString() + "','" + Platform_textBox.Text + "','" + buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd") + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text + "','" + checkstatetobool(Available_checkBox.CheckState));
 
             //insere na FisGameTable
             SqlConnection conn = new SqlConnection(strcon);
-            SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values('" + FisGameId.ToString() + "','" +  GameId.ToString() +"','" + Platform_textBox.Text +"','"  +buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd")  + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text +"','"+ Available_checkBox.Checked.ToString() + "');", conn);
+            SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values('" + FisGameId.ToString() + "','" +  GameId.ToString() +"','" + Platform_textBox.Text +"','"  +buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd")  + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text +"','"+ checkstatetobool(Available_checkBox.CheckState) + "');", conn);
             Console.Write( com.ToString());
             try
             {

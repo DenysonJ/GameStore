@@ -193,8 +193,10 @@
             // 
             // gamesView
             // 
+            this.gamesView.HideSelection = false;
             this.gamesView.LargeImageList = this.imageList1;
             this.gamesView.Location = new System.Drawing.Point(12, 70);
+            this.gamesView.MultiSelect = false;
             this.gamesView.Name = "gamesView";
             this.gamesView.Size = new System.Drawing.Size(510, 405);
             this.gamesView.SmallImageList = this.imageList1;
@@ -300,7 +302,6 @@
             this.Controls.Add(this.txt_search);
             this.Name = "Store_iGUI";
             this.Text = "ES Games";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_iGUI_FormClosed);
             this.Load += new System.EventHandler(this.Store_iGUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).EndInit();
