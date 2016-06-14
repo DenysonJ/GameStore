@@ -15,6 +15,7 @@ namespace GameStore
     {
         private bool adminModeOn = false;
         private int GameID, receiverID;
+        private List<int> indexer = new List<int>();
         public store_iGUI2(int user, int GameId, int platformindex, bool availableonly)
         {
             InitializeComponent();
@@ -51,8 +52,8 @@ namespace GameStore
 
                 while (reader.Read())
                 {
-                        string name = reader.GetString(9);      //9 is Login index in fisgametable
-                        receiver_comboBox.Items.Add(name);
+                    string name = reader.GetString(9);      //9 is Login index in fisgametable
+                    receiver_comboBox.Items.Add(name);
                 }
             }
             catch (Exception ex)
@@ -63,9 +64,9 @@ namespace GameStore
             finally
             {
                 connection.Close();
-            
+
+            }
         }
-    }
         private string genreConverter(int genr)
         { //traduz o gender de int pra string
             string Genre = "";
@@ -144,7 +145,8 @@ namespace GameStore
 
                 while (reader.Read())
                 {
-                    if (reader.GetInt32(1) == GameID) {  // 1 is gameid
+                    if (reader.GetInt32(1) == GameID)
+                    {  // 1 is gameid
                         string name = reader.GetString(4);      //4 is platform index in fisgametable
                         platform_comboBox.Items.Add(name);
                     }
@@ -165,7 +167,7 @@ namespace GameStore
         {
             gamesView.Clear();
             gamesView.Columns.Add(" ");
-            gamesView.Columns.Add("Dono",100);
+            gamesView.Columns.Add("Dono", 100);
             gamesView.Columns.Add("Plataforma", 100);
             gamesView.Columns.Add("Data de Compra", 100);
             gamesView.Columns.Add("Avaliação", 100);
@@ -214,7 +216,7 @@ namespace GameStore
 
                 foreach (DataRow fisGame in ds.Tables[0].Rows)
                 {
-                    if(fisGame.Field<int>("GameId") == GameID && availableTest(fisGame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisGame.Field<string>("Platform") == platform_comboBox.Text))
+                    if (fisGame.Field<int>("GameId") == GameID && availableTest(fisGame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisGame.Field<string>("Platform") == platform_comboBox.Text))
                     {
                         ListViewItem ite = new ListViewItem();
                         DataRow user = ds.Tables[1].Rows.Find(fisGame.Field<int>("Owner"));
@@ -225,12 +227,14 @@ namespace GameStore
                         else
                             ite.SubItems.Add("Não fornecido.");
                         ite.SubItems.Add(fisGame.Field<string>("Avaliation"));
-                        if(fisGame.Field<bool>("Available"))
+                        if (fisGame.Field<bool>("Available"))
                             ite.SubItems.Add("Disponível.");
                         else
                             ite.SubItems.Add("Indisponível.");
 
                         gamesView.Items.Add(ite);
+
+                        indexer.Add(fisGame.Field<int>("FisGameId"));
                     }
                 }
 
@@ -253,41 +257,34 @@ namespace GameStore
             {
                 receiverID = receiver_comboBox.SelectedIndex;
             }
-
+            bool error = true;
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
-            SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("UPDATE FisGameTable SET Available=False WHERE FisGameID="  +";", connection);
+            SqlConnection con = new SqlConnection(strcon);
+            SqlCommand com = new SqlCommand("SELECT * FROM  UserTable WHERE UserID=" + receiverID + ";", con);
             try
             {
-                connection.Open();
-                cmd.ExecuteNonQuery();
+                con.Open();
+                com.ExecuteNonQuery();
                 SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-                da.SelectCommand = cmd;
+                DataTable ds = new DataTable();
+                da.SelectCommand = com;
                 da.Fill(ds);
-                ds.Tables[1].PrimaryKey = new DataColumn[] { ds.Tables[1].Columns["UserID"] };
-
-                foreach (DataRow fisGame in ds.Tables[0].Rows)
+                if (ds.Rows[0].Field<int>("Counter") > 0)
                 {
-                    if (fisGame.Field<int>("GameId") == GameID && availableTest(fisGame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisGame.Field<string>("Platform") == platform_comboBox.Text))
-                    {
-                        ListViewItem ite = new ListViewItem();
-                        DataRow user = ds.Tables[1].Rows.Find(fisGame.Field<int>("Owner"));
-                        ite.SubItems.Add(user.Field<string>("Login"));
-                        ite.SubItems.Add(fisGame.Field<string>("Platform"));
-                        if (fisGame.Field<DateTime?>("BuyDate").HasValue)
-                            ite.SubItems.Add(fisGame.Field<DateTime>("BuyDate").ToShortDateString());
+                    if(ds.Rows[0].Field<int>("Rented") == -1)
+                        error = false;
+                    else
+                        if (adminModeOn)
+                            MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
                         else
-                            ite.SubItems.Add("Não fornecido.");
-                        ite.SubItems.Add(fisGame.Field<string>("Avaliation"));
-                        if (fisGame.Field<bool>("Available"))
-                            ite.SubItems.Add("Disponível.");
-                        else
-                            ite.SubItems.Add("Indisponível.");
-
-                        gamesView.Items.Add(ite);
-                    }
+                            MessageBox.Show("Você não pode locar jogos.\n É necessário devolver antes de locar novamente.");
                 }
+                else
+                    if(adminModeOn)
+                        MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+                    else
+                        MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+
 
             }
             catch (Exception ex)
@@ -297,7 +294,29 @@ namespace GameStore
             }
             finally
             {
-                connection.Close();
+                con.Close();
+            }
+
+            if (!error)
+            {
+
+                SqlConnection connection = new SqlConnection(strcon);
+                SqlCommand cmd = new SqlCommand("UPDATE FisGameTable SET Available=0 WHERE FisGameId=" + indexer[gamesView.SelectedIndices[0]] + "; UPDATE UserTable SET Rented=" + indexer[gamesView.SelectedIndices[0]] + " WHERE UserID=" + receiverID + ";", connection);
+                try
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro " + ex.Message);
+                    throw;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                this.Close();
             }
         }
     }

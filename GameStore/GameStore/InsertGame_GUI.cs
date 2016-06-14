@@ -108,12 +108,9 @@ namespace GameStore
                     this.Close();
             }
 
-            Console.WriteLine(FisGameId.ToString() + "','" + GameId.ToString() + "','" + Platform_textBox.Text + "','" + buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd") + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text + "','" + checkstatetobool(Available_checkBox.CheckState));
-
             //insere na FisGameTable
             SqlConnection conn = new SqlConnection(strcon);
             SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values('" + FisGameId.ToString() + "','" +  GameId.ToString() +"','" + Platform_textBox.Text +"','"  +buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd")  + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text +"','"+ checkstatetobool(Available_checkBox.CheckState) + "');", conn);
-            Console.Write( com.ToString());
             try
             {
                 conn.Open();
@@ -128,6 +125,24 @@ namespace GameStore
             {
                 conn.Close();
             }
+
+            SqlConnection conne = new SqlConnection(strcon);
+            SqlCommand comma = new SqlCommand("UPDATE UserTable SET Counter=Counter+4 WHERE Owner="+owner_comboBox.SelectedIndex+"; UPDATE UserTable SET List=CONCAT(List,"+FisGameId.ToString()+") WHERE Owner="+owner_comboBox.SelectedIndex+";", conne);
+            try
+            {
+                conne.Open();
+                comma.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                conne.Close();
+            }
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
