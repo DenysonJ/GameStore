@@ -200,6 +200,7 @@ namespace GameStore
         private void SearchAndShow()
         {
             gamesViewClear();
+            indexer.Clear();
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
