@@ -1,0 +1,33 @@
+C:\Users\Rubens I\gamestore\GameStore\GameStore\bin\Debug\GameStore.exe.config
+C:\Users\Rubens I\gamestore\GameStore\GameStore\bin\Debug\storeDatabase.mdf
+C:\Users\Rubens I\gamestore\GameStore\GameStore\bin\Debug\storeDatabase_log.ldf
+C:\Users\Rubens I\gamestore\GameStore\GameStore\bin\Debug\GameStore.exe
+C:\Users\Rubens I\gamestore\GameStore\GameStore\bin\Debug\GameStore.pdb
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.csprojResolveAssemblyReference.cache
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.InsertGame_GUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.Login_GUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.Properties.Resources.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.Store_iGUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.TelaInicial.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.csproj.GenerateResource.Cache
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.exe
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.pdb
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.InsertGame2_GUI.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\bin\Debug\GameStore.exe.config
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.exe
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.pdb
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\bin\Debug\storeDatabase.mdf
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\bin\Debug\storeDatabase_log.ldf
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\bin\Debug\GameStore.exe
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\bin\Debug\GameStore.pdb
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.csprojResolveAssemblyReference.cache
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.InsertGame2_GUI.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.InsertGame_GUI.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.Login_GUI.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.Properties.Resources.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.Store_iGUI.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.TelaInicial.resources
+C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\GameStore\obj\Debug\GameStore.csproj.GenerateResource.Cache
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.deleteUser_GUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.newUser_GUI.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.store_iGUI2.resources

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label gameIDLabel;
             this.txt_search = new System.Windows.Forms.TextBox();
             this.Search_btn = new System.Windows.Forms.Button();
             this.chk_opt_RPG = new System.Windows.Forms.CheckBox();
@@ -41,7 +42,26 @@
             this.check_opt_strategy = new System.Windows.Forms.CheckBox();
             this.gamesView = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.storeDatabaseDataSet = new GameStore.storeDatabaseDataSet();
+            this.gameTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.gameTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.GameTableTableAdapter();
+            this.tableAdapterManager = new GameStore.storeDatabaseDataSetTableAdapters.TableAdapterManager();
+            this.gameIDLabel1 = new System.Windows.Forms.Label();
+            this.platform_comboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.AvailableOnly_checkBox = new System.Windows.Forms.CheckBox();
+            this.ShowGame_button = new System.Windows.Forms.Button();
+            gameIDLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // gameIDLabel
+            // 
+            gameIDLabel.Location = new System.Drawing.Point(60, 12);
+            gameIDLabel.Name = "gameIDLabel";
+            gameIDLabel.Size = new System.Drawing.Size(100, 23);
+            gameIDLabel.TabIndex = 0;
             // 
             // txt_search
             // 
@@ -70,6 +90,8 @@
             // chk_opt_RPG
             // 
             this.chk_opt_RPG.AutoSize = true;
+            this.chk_opt_RPG.Checked = true;
+            this.chk_opt_RPG.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chk_opt_RPG.Location = new System.Drawing.Point(529, 232);
             this.chk_opt_RPG.Name = "chk_opt_RPG";
             this.chk_opt_RPG.Size = new System.Drawing.Size(49, 17);
@@ -81,6 +103,8 @@
             // check_opt_Action
             // 
             this.check_opt_Action.AutoSize = true;
+            this.check_opt_Action.Checked = true;
+            this.check_opt_Action.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_Action.Location = new System.Drawing.Point(529, 71);
             this.check_opt_Action.Name = "check_opt_Action";
             this.check_opt_Action.Size = new System.Drawing.Size(51, 17);
@@ -92,6 +116,8 @@
             // check_opt_Adventure
             // 
             this.check_opt_Adventure.AutoSize = true;
+            this.check_opt_Adventure.Checked = true;
+            this.check_opt_Adventure.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_Adventure.Location = new System.Drawing.Point(529, 94);
             this.check_opt_Adventure.Name = "check_opt_Adventure";
             this.check_opt_Adventure.Size = new System.Drawing.Size(69, 17);
@@ -103,6 +129,8 @@
             // check_opt_shooter
             // 
             this.check_opt_shooter.AutoSize = true;
+            this.check_opt_shooter.Checked = true;
+            this.check_opt_shooter.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_shooter.Location = new System.Drawing.Point(529, 209);
             this.check_opt_shooter.Name = "check_opt_shooter";
             this.check_opt_shooter.Size = new System.Drawing.Size(63, 17);
@@ -114,6 +142,8 @@
             // check_opt_sports
             // 
             this.check_opt_sports.AutoSize = true;
+            this.check_opt_sports.Checked = true;
+            this.check_opt_sports.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_sports.Location = new System.Drawing.Point(529, 140);
             this.check_opt_sports.Name = "check_opt_sports";
             this.check_opt_sports.Size = new System.Drawing.Size(67, 17);
@@ -125,6 +155,8 @@
             // check_opt_racing
             // 
             this.check_opt_racing.AutoSize = true;
+            this.check_opt_racing.Checked = true;
+            this.check_opt_racing.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_racing.Location = new System.Drawing.Point(529, 117);
             this.check_opt_racing.Name = "check_opt_racing";
             this.check_opt_racing.Size = new System.Drawing.Size(59, 17);
@@ -136,6 +168,8 @@
             // check_opt_puzzles
             // 
             this.check_opt_puzzles.AutoSize = true;
+            this.check_opt_puzzles.Checked = true;
+            this.check_opt_puzzles.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_puzzles.Location = new System.Drawing.Point(529, 186);
             this.check_opt_puzzles.Name = "check_opt_puzzles";
             this.check_opt_puzzles.Size = new System.Drawing.Size(62, 17);
@@ -147,6 +181,8 @@
             // check_opt_strategy
             // 
             this.check_opt_strategy.AutoSize = true;
+            this.check_opt_strategy.Checked = true;
+            this.check_opt_strategy.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_opt_strategy.Location = new System.Drawing.Point(529, 163);
             this.check_opt_strategy.Name = "check_opt_strategy";
             this.check_opt_strategy.Size = new System.Drawing.Size(73, 17);
@@ -172,12 +208,85 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // storeDatabaseDataSet
+            // 
+            this.storeDatabaseDataSet.DataSetName = "storeDatabaseDataSet";
+            this.storeDatabaseDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // gameTableTableAdapter
+            // 
+            this.gameTableTableAdapter.ClearBeforeFill = true;
+            // 
+            // tableAdapterManager
+            // 
+            this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
+            this.tableAdapterManager.Connection = null;
+            this.tableAdapterManager.FisGameTableTableAdapter = null;
+            this.tableAdapterManager.GameTableTableAdapter = null;
+            this.tableAdapterManager.OperationsTableTableAdapter = null;
+            this.tableAdapterManager.UpdateOrder = GameStore.storeDatabaseDataSetTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
+            this.tableAdapterManager.UserTableTableAdapter = null;
+            // 
+            // gameIDLabel1
+            // 
+            this.gameIDLabel1.Location = new System.Drawing.Point(60, 12);
+            this.gameIDLabel1.Name = "gameIDLabel1";
+            this.gameIDLabel1.Size = new System.Drawing.Size(100, 23);
+            this.gameIDLabel1.TabIndex = 1;
+            // 
+            // platform_comboBox
+            // 
+            this.platform_comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.platform_comboBox.FormattingEnabled = true;
+            this.platform_comboBox.Items.AddRange(new object[] {
+            "Todas"});
+            this.platform_comboBox.Location = new System.Drawing.Point(187, 22);
+            this.platform_comboBox.MaxDropDownItems = 100;
+            this.platform_comboBox.Name = "platform_comboBox";
+            this.platform_comboBox.Size = new System.Drawing.Size(121, 21);
+            this.platform_comboBox.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(121, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Plataforma:";
+            // 
+            // AvailableOnly_checkBox
+            // 
+            this.AvailableOnly_checkBox.AutoSize = true;
+            this.AvailableOnly_checkBox.Location = new System.Drawing.Point(350, 47);
+            this.AvailableOnly_checkBox.Name = "AvailableOnly_checkBox";
+            this.AvailableOnly_checkBox.Size = new System.Drawing.Size(121, 17);
+            this.AvailableOnly_checkBox.TabIndex = 18;
+            this.AvailableOnly_checkBox.Text = "Apenas Disponíveis";
+            this.AvailableOnly_checkBox.UseVisualStyleBackColor = true;
+            // 
+            // ShowGame_button
+            // 
+            this.ShowGame_button.Location = new System.Drawing.Point(434, 524);
+            this.ShowGame_button.Name = "ShowGame_button";
+            this.ShowGame_button.Size = new System.Drawing.Size(75, 23);
+            this.ShowGame_button.TabIndex = 19;
+            this.ShowGame_button.Text = "Mostrar Jogos";
+            this.ShowGame_button.UseVisualStyleBackColor = true;
+            this.ShowGame_button.Click += new System.EventHandler(this.ShowGame_button_Click);
+            // 
             // Store_iGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(607, 497);
+            this.ClientSize = new System.Drawing.Size(624, 655);
+            this.Controls.Add(this.ShowGame_button);
+            this.Controls.Add(this.AvailableOnly_checkBox);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.platform_comboBox);
+            this.Controls.Add(gameIDLabel);
+            this.Controls.Add(this.gameIDLabel1);
             this.Controls.Add(this.gamesView);
             this.Controls.Add(this.check_opt_strategy);
             this.Controls.Add(this.check_opt_puzzles);
@@ -193,6 +302,8 @@
             this.Text = "ES Games";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_iGUI_FormClosed);
             this.Load += new System.EventHandler(this.Store_iGUI_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,5 +323,14 @@
         private System.Windows.Forms.CheckBox check_opt_strategy;
         private System.Windows.Forms.ListView gamesView;
         private System.Windows.Forms.ImageList imageList1;
+        private storeDatabaseDataSet storeDatabaseDataSet;
+        private System.Windows.Forms.BindingSource gameTableBindingSource;
+        private storeDatabaseDataSetTableAdapters.GameTableTableAdapter gameTableTableAdapter;
+        private storeDatabaseDataSetTableAdapters.TableAdapterManager tableAdapterManager;
+        private System.Windows.Forms.Label gameIDLabel1;
+        private System.Windows.Forms.ComboBox platform_comboBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox AvailableOnly_checkBox;
+        private System.Windows.Forms.Button ShowGame_button;
     }
 }
