@@ -23,14 +23,14 @@ namespace GameStore
         private void Login_btn_Click(object sender, EventArgs e)
         {
             string password = Password_tb.Text;
-            string user = Login_tb.Text;            
+            string user = Login_tb.Text;           
 
             if ((Login_tb.Text == "admin") && (password == "ESGames123"))
             {
                 DialogResult = DialogResult.OK;
                 Close();
             }
-            else if(client.validate(password, ref userID))
+            else if(client.validate(password, ref userID, user))
             {
                 DialogResult = DialogResult.Yes;
                 Close();

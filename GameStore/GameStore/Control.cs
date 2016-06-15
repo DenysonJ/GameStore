@@ -9,12 +9,13 @@ namespace GameStore
 {
     public class ClientManager
     {
-        public bool validate(string password, ref int userID)
+        public bool validate(string password, ref int userID, string user)
         {
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            string select = "SELECT * FROM UserTable WHERE Login = '" + user + "'";
             SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT" + user + "FROM UserTable", connection);
+            SqlCommand cmd = new SqlCommand(select, connection);
             SqlDataReader reader;
 
             try
@@ -24,9 +25,9 @@ namespace GameStore
 
                 reader.Read();
 
-                if(reader.GetFieldValue<string>(3) == password)
+                if((string.Compare(reader.GetFieldValue<string>(3), password)) == 0)
                 {
-                    userID = reader.GetFieldType<int>(0);
+                    userID = reader.GetFieldValue<int>(0);
                     return true;
                 }
                 else
