@@ -1,88 +1,136 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace GameStore
 {
-    
+
     public class GameManager
     {
-        private gamelist gl = new gamelist();
-        public List<Games> gameList = new List<Games>();
         public ushort genre;
 
-        public void insert_new_game(Games new_game)
+        public List<string> LoadPlatformCombobox()
         {
-            gl.insert_game(new_game);
-        }
-
-        private object ConvertByteToObject(byte[] bytes)
-        {
-            MemoryStream memStream = new MemoryStream();
-            BinaryFormatter binForm = new BinaryFormatter();
-
-            //grava na stream o array de bytes passado como parâmetro
-            memStream.Write(bytes, 0, bytes.Length);
-
-            //modifica a posição de início da stream (posição zero)
-            memStream.Seek(0, SeekOrigin.Begin);
-
-            //converte a stream em um object
-            object obj = binForm.Deserialize(memStream);
-
-            return obj;
-        }
-        
-        public void LoadGameList()
-        {
-            if(File.Exists(".\\data\\game_list.bin"))
+            List<string> names = new List<string>();
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable", connection);
+            SqlDataReader reader;
+            try
             {
-                FileStream file = new FileStream(".\\data\\game_list.bin", FileMode.Open);
-                BinaryReader br = new BinaryReader(file);
+                connection.Open();
+                reader = cmd.ExecuteReader();
 
-                int obj_size;
-                int size = 0;
-
-                file.Seek(0, SeekOrigin.Begin);
-
-                while (size < file.Length)
+                while (reader.Read())
                 {
-                    obj_size = br.ReadInt32();
-
-                    gameList.Add((Games)ConvertByteToObject(br.ReadBytes(obj_size)));
-
-                    //Read the size of the object (int) and then the object
-                    size += sizeof(int);
-                    size += obj_size;
-
+                    string name = reader.GetString(4);      //4 is platform index in fisgametable
+                    names.Add(name);
                 }
+
             }
-            
-        }
-
-        public List<Games> SearchGameByName(string name)
-        {
-            List<Games> games = new List<Games>();
-            string game_name;
-            int j = 0;
-
-            name = name.ToLower();
-
-            foreach(Games game in gameList)
+            catch (Exception ex)
             {
-                game_name = game.name.ToLower();
-
-                if (string.Compare(game_name, name, false) == 0)
-                {
-                    games.Insert(j, game);
-                    j++;
-                }
-                else if (game_name.Contains(name))
-                    games.Add(game);
+                MessageBox.Show("Erro " + ex.Message);
+            }
+            finally
+            {
+                connection.Close();
             }
 
-            return games;
+            return names;
         }
+
+        public List<ListViewItem> LoadList(ref int globalimageindex, ref List<string> images, ref List<int> indexer)
+        {
+            List<ListViewItem> items = new List<ListViewItem>();
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
+
+            try
+            {
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataTable ds = new DataTable();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };
+
+                int index = 0;
+
+                foreach (DataRow game in ds.Rows)
+                {
+                    ListViewItem item = new ListViewItem();
+
+                    if (game.Field<string>("Image") != null)
+                    {
+                        images.Add(game.Field<string>("Image"));
+                        //Image cov = Image.FromFile(game.Field<string>("Image"));
+                        //imageList1.Images.Add(cov);
+                    }
+                    else
+                    {
+                        images.Add("null");
+                        //imageList1.Images.Add(Image.FromFile("..\\..\\Resources\\null.png"));
+                    }
+                    item.ImageIndex = globalimageindex++;
+
+                    indexer.Add(game.Field<int>("GameID"));
+
+                    item.SubItems.Add(game.Field<string>("Name"));
+                    item.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
+                    item.SubItems.Add(game.Field<string>("Developer"));
+                    item.SubItems.Add(genreConverter(game.Field<int>("Genre")));
+                    item.SubItems.Add(game.Field<string>("Description"));
+
+                    items.Add(item);
+
+                    //gamesView.Items.Add(ite);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            //Search();
+            return items;
+        }
+
+        private string genreConverter(int genr)
+        { //traduz o gender de int pra string
+            string Genre = "";
+            if (~(genr | (~Constants.game_type_action)) == 0x00)
+                Genre += "Ação ";
+            if (~(genr | (~Constants.game_type_adventure)) == 0x00)
+                Genre += "Aventura ";
+            if (~(genr | (~Constants.game_type_racing)) == 0x00)
+                Genre += "Corrida ";
+            if (~(genr | (~Constants.game_type_sports)) == 0x00)
+                Genre += "Esportes ";
+            if (~(genr | (~Constants.game_type_strategy)) == 0x00)
+                Genre += "Estratégia ";
+            if (~(genr | (~Constants.game_type_puzzle)) == 0x00)
+                Genre += "Puzzle ";
+            if (~(genr | (~Constants.game_type_shooter)) == 0x00)
+                Genre += "Shooter ";
+            if (~(genr | (~Constants.game_type_RPG)) == 0x00)
+                Genre += "RPG ";
+
+            if (Genre == "")
+                Genre = "none";
+
+            return Genre;
+        }
+
+
 
     }
 }

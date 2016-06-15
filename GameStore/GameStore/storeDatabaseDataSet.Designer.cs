@@ -1404,7 +1404,7 @@ namespace GameStore {
             
             private global::System.Data.DataColumn columnPassword;
             
-            private global::System.Data.DataColumn columnemail;
+            private global::System.Data.DataColumn columnEmail;
             
             private global::System.Data.DataColumn columnPhone;
             
@@ -1483,9 +1483,9 @@ namespace GameStore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn emailColumn {
+            public global::System.Data.DataColumn EmailColumn {
                 get {
-                    return this.columnemail;
+                    return this.columnEmail;
                 }
             }
             
@@ -1566,14 +1566,14 @@ namespace GameStore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public UserTableRow AddUserTableRow(int UserID, string UserName, System.DateTime BirthDate, string Password, string email, int Phone, string List, int Rented, string History, string Login) {
+            public UserTableRow AddUserTableRow(int UserID, string UserName, System.DateTime BirthDate, string Password, string Email, string Phone, string List, int Rented, string History, string Login) {
                 UserTableRow rowUserTableRow = ((UserTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         UserID,
                         UserName,
                         BirthDate,
                         Password,
-                        email,
+                        Email,
                         Phone,
                         List,
                         Rented,
@@ -1612,7 +1612,7 @@ namespace GameStore {
                 this.columnUserName = base.Columns["UserName"];
                 this.columnBirthDate = base.Columns["BirthDate"];
                 this.columnPassword = base.Columns["Password"];
-                this.columnemail = base.Columns["email"];
+                this.columnEmail = base.Columns["Email"];
                 this.columnPhone = base.Columns["Phone"];
                 this.columnList = base.Columns["List"];
                 this.columnRented = base.Columns["Rented"];
@@ -1631,9 +1631,9 @@ namespace GameStore {
                 base.Columns.Add(this.columnBirthDate);
                 this.columnPassword = new global::System.Data.DataColumn("Password", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPassword);
-                this.columnemail = new global::System.Data.DataColumn("email", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnemail);
-                this.columnPhone = new global::System.Data.DataColumn("Phone", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmail);
+                this.columnPhone = new global::System.Data.DataColumn("Phone", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPhone);
                 this.columnList = new global::System.Data.DataColumn("List", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnList);
@@ -1652,7 +1652,7 @@ namespace GameStore {
                 this.columnBirthDate.AllowDBNull = false;
                 this.columnPassword.AllowDBNull = false;
                 this.columnPassword.MaxLength = 10;
-                this.columnemail.MaxLength = 50;
+                this.columnEmail.MaxLength = 50;
                 this.columnList.MaxLength = 2147483647;
                 this.columnHistory.MaxLength = 2147483647;
                 this.columnLogin.MaxLength = 10;
@@ -2232,26 +2232,26 @@ namespace GameStore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string email {
+            public string Email {
                 get {
                     try {
-                        return ((string)(this[this.tableUserTable.emailColumn]));
+                        return ((string)(this[this.tableUserTable.EmailColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'email\' in table \'UserTable\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'Email\' in table \'UserTable\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableUserTable.emailColumn] = value;
+                    this[this.tableUserTable.EmailColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Phone {
+            public string Phone {
                 get {
                     try {
-                        return ((int)(this[this.tableUserTable.PhoneColumn]));
+                        return ((string)(this[this.tableUserTable.PhoneColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'Phone\' in table \'UserTable\' is DBNull.", e);
@@ -2328,14 +2328,14 @@ namespace GameStore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsemailNull() {
-                return this.IsNull(this.tableUserTable.emailColumn);
+            public bool IsEmailNull() {
+                return this.IsNull(this.tableUserTable.EmailColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetemailNull() {
-                this[this.tableUserTable.emailColumn] = global::System.Convert.DBNull;
+            public void SetEmailNull() {
+                this[this.tableUserTable.EmailColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3868,7 +3868,7 @@ SELECT OperationId, Date, Type, Game, [User] FROM OperationsTable WHERE (Operati
             tableMapping.ColumnMappings.Add("UserName", "UserName");
             tableMapping.ColumnMappings.Add("BirthDate", "BirthDate");
             tableMapping.ColumnMappings.Add("Password", "Password");
-            tableMapping.ColumnMappings.Add("email", "email");
+            tableMapping.ColumnMappings.Add("email", "Email");
             tableMapping.ColumnMappings.Add("Phone", "Phone");
             tableMapping.ColumnMappings.Add("List", "List");
             tableMapping.ColumnMappings.Add("Rented", "Rented");

@@ -19,57 +19,15 @@ namespace GameStore
         public const ushort game_type_RPG         = 0x80;
     }
 
-    [Serializable]
     public class Games
     {
+        public int gameid;
         public string name;
         public int releaseYear;
-        public int gameAge; //how long was purchased
         public ushort genre;
         public string description;
         public string image_name;
     }
 
-    public class gamelist
-    {
-        
-        public void insert_game(Games game)
-        {
-            saveElement(game);            
-        }
-
-        public static byte[] ConvertObjectToByte(object obj)
-        {
-            if (obj == null)
-            {
-                return null;
-            }
-
-            BinaryFormatter bf = new BinaryFormatter();
-
-            MemoryStream ms = new MemoryStream();
-
-            //cria um array de bytes através do objeto obj
-            bf.Serialize(ms, obj);
-
-            //recebe o array referente ao objeto obj
-            byte[] byt_array = ms.ToArray();
-
-            return byt_array;
-        }
-
-      
-        public void saveElement(Games element)
-        {
-            FileStream file = new FileStream(".\\data\\game_list.bin", FileMode.Append);
-            BinaryWriter bw = new BinaryWriter(file);
-            byte[] byt;
-            byt = ConvertObjectToByte(element);
-            bw.Write(byt.GetLength(1));
-            bw.Write(byt);
-            bw.Close();
-            file.Close();
-        }
-    }
 }
 
