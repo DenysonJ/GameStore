@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label gameIDLabel;
             this.txt_search = new System.Windows.Forms.TextBox();
-            this.Search_btn = new System.Windows.Forms.Button();
             this.chk_opt_RPG = new System.Windows.Forms.CheckBox();
             this.check_opt_Action = new System.Windows.Forms.CheckBox();
             this.check_opt_Adventure = new System.Windows.Forms.CheckBox();
@@ -43,7 +41,6 @@
             this.gamesView = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.storeDatabaseDataSet = new GameStore.storeDatabaseDataSet();
-            this.gameTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.gameTableTableAdapter = new GameStore.storeDatabaseDataSetTableAdapters.GameTableTableAdapter();
             this.tableAdapterManager = new GameStore.storeDatabaseDataSetTableAdapters.TableAdapterManager();
             this.gameIDLabel1 = new System.Windows.Forms.Label();
@@ -51,17 +48,22 @@
             this.label1 = new System.Windows.Forms.Label();
             this.AvailableOnly_checkBox = new System.Windows.Forms.CheckBox();
             this.ShowGame_button = new System.Windows.Forms.Button();
-            gameIDLabel = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.minhaContaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bibliotecaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alugadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.emprestadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.históricoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.emprestarJogoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Search_btn = new System.Windows.Forms.Button();
+            this.gameTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // gameIDLabel
-            // 
-            gameIDLabel.Location = new System.Drawing.Point(60, 12);
-            gameIDLabel.Name = "gameIDLabel";
-            gameIDLabel.Size = new System.Drawing.Size(100, 23);
-            gameIDLabel.TabIndex = 0;
             // 
             // txt_search
             // 
@@ -72,20 +74,6 @@
             this.txt_search.Text = "Digite o nome do jogo";
             this.txt_search.Enter += new System.EventHandler(this.txt_search_Enter);
             this.txt_search.Leave += new System.EventHandler(this.txt_search_Leave);
-            // 
-            // Search_btn
-            // 
-            this.Search_btn.BackColor = System.Drawing.Color.Transparent;
-            this.Search_btn.BackgroundImage = global::GameStore.Properties.Resources.search_lupa;
-            this.Search_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Search_btn.FlatAppearance.BorderSize = 0;
-            this.Search_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Search_btn.Location = new System.Drawing.Point(550, 12);
-            this.Search_btn.Name = "Search_btn";
-            this.Search_btn.Size = new System.Drawing.Size(45, 43);
-            this.Search_btn.TabIndex = 1;
-            this.Search_btn.UseVisualStyleBackColor = false;
-            this.Search_btn.Click += new System.EventHandler(this.Search_btn_Click);
             // 
             // chk_opt_RPG
             // 
@@ -231,7 +219,7 @@
             // 
             // gameIDLabel1
             // 
-            this.gameIDLabel1.Location = new System.Drawing.Point(60, 12);
+            this.gameIDLabel1.Location = new System.Drawing.Point(198, 12);
             this.gameIDLabel1.Name = "gameIDLabel1";
             this.gameIDLabel1.Size = new System.Drawing.Size(100, 23);
             this.gameIDLabel1.TabIndex = 1;
@@ -242,7 +230,7 @@
             this.platform_comboBox.FormattingEnabled = true;
             this.platform_comboBox.Items.AddRange(new object[] {
             "Todas"});
-            this.platform_comboBox.Location = new System.Drawing.Point(187, 22);
+            this.platform_comboBox.Location = new System.Drawing.Point(78, 45);
             this.platform_comboBox.MaxDropDownItems = 100;
             this.platform_comboBox.Name = "platform_comboBox";
             this.platform_comboBox.Size = new System.Drawing.Size(121, 21);
@@ -251,7 +239,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(121, 27);
+            this.label1.Location = new System.Drawing.Point(12, 51);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 13;
@@ -269,13 +257,104 @@
             // 
             // ShowGame_button
             // 
-            this.ShowGame_button.Location = new System.Drawing.Point(434, 524);
+            this.ShowGame_button.Location = new System.Drawing.Point(529, 522);
             this.ShowGame_button.Name = "ShowGame_button";
             this.ShowGame_button.Size = new System.Drawing.Size(75, 23);
             this.ShowGame_button.TabIndex = 19;
             this.ShowGame_button.Text = "Mostrar Jogos";
             this.ShowGame_button.UseVisualStyleBackColor = true;
             this.ShowGame_button.Click += new System.EventHandler(this.ShowGame_button_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(615, 24);
+            this.menuStrip1.TabIndex = 20;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.minhaContaToolStripMenuItem,
+            this.bibliotecaToolStripMenuItem,
+            this.históricoToolStripMenuItem,
+            this.emprestarJogoToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // minhaContaToolStripMenuItem
+            // 
+            this.minhaContaToolStripMenuItem.Name = "minhaContaToolStripMenuItem";
+            this.minhaContaToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.minhaContaToolStripMenuItem.Text = "Minha Conta";
+            // 
+            // bibliotecaToolStripMenuItem
+            // 
+            this.bibliotecaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alugadosToolStripMenuItem,
+            this.emprestadosToolStripMenuItem});
+            this.bibliotecaToolStripMenuItem.Name = "bibliotecaToolStripMenuItem";
+            this.bibliotecaToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.bibliotecaToolStripMenuItem.Text = "Meus Jogos";
+            // 
+            // alugadosToolStripMenuItem
+            // 
+            this.alugadosToolStripMenuItem.Name = "alugadosToolStripMenuItem";
+            this.alugadosToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.alugadosToolStripMenuItem.Text = "Alugados";
+            // 
+            // emprestadosToolStripMenuItem
+            // 
+            this.emprestadosToolStripMenuItem.Name = "emprestadosToolStripMenuItem";
+            this.emprestadosToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.emprestadosToolStripMenuItem.Text = "Emprestados";
+            // 
+            // históricoToolStripMenuItem
+            // 
+            this.históricoToolStripMenuItem.Name = "históricoToolStripMenuItem";
+            this.históricoToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.históricoToolStripMenuItem.Text = "Histórico";
+            // 
+            // emprestarJogoToolStripMenuItem
+            // 
+            this.emprestarJogoToolStripMenuItem.Name = "emprestarJogoToolStripMenuItem";
+            this.emprestarJogoToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.emprestarJogoToolStripMenuItem.Text = "Emprestar Jogo";
+            this.emprestarJogoToolStripMenuItem.Click += new System.EventHandler(this.emprestarJogoToolStripMenuItem_Click);
+            // 
+            // Search_btn
+            // 
+            this.Search_btn.BackColor = System.Drawing.Color.Transparent;
+            this.Search_btn.BackgroundImage = global::GameStore.Properties.Resources.search_lupa;
+            this.Search_btn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Search_btn.FlatAppearance.BorderSize = 0;
+            this.Search_btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Search_btn.Location = new System.Drawing.Point(550, 12);
+            this.Search_btn.Name = "Search_btn";
+            this.Search_btn.Size = new System.Drawing.Size(45, 43);
+            this.Search_btn.TabIndex = 1;
+            this.Search_btn.UseVisualStyleBackColor = false;
+            this.Search_btn.Click += new System.EventHandler(this.Search_btn_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // Store_iGUI
             // 
@@ -287,7 +366,6 @@
             this.Controls.Add(this.AvailableOnly_checkBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.platform_comboBox);
-            this.Controls.Add(gameIDLabel);
             this.Controls.Add(this.gameIDLabel1);
             this.Controls.Add(this.gamesView);
             this.Controls.Add(this.check_opt_strategy);
@@ -300,11 +378,15 @@
             this.Controls.Add(this.chk_opt_RPG);
             this.Controls.Add(this.Search_btn);
             this.Controls.Add(this.txt_search);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Store_iGUI";
             this.Text = "ES Games";
             this.Load += new System.EventHandler(this.Store_iGUI_Load);
             ((System.ComponentModel.ISupportInitialize)(this.storeDatabaseDataSet)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameTableBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -334,5 +416,15 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox AvailableOnly_checkBox;
         private System.Windows.Forms.Button ShowGame_button;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem minhaContaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bibliotecaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alugadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem emprestadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem históricoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem emprestarJogoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }

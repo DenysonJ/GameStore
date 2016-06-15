@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace GameStore
 {
@@ -14,6 +17,37 @@ namespace GameStore
         public void insert_new_game(Games new_game)
         {
             gl.insert_game(new_game);
+        }
+
+        public List<string> FillPlatformCombobox()
+        {
+            List<string> names = new List<string>();
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable", connection);
+            SqlDataReader reader;
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string name = reader.GetString(4);      //4 is login index in fisgametable
+                    names.Add(name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return names;
         }
 
         private object ConvertByteToObject(byte[] bytes)
@@ -58,30 +92,6 @@ namespace GameStore
                 }
             }
             
-        }
-
-        public List<Games> SearchGameByName(string name)
-        {
-            List<Games> games = new List<Games>();
-            string game_name;
-            int j = 0;
-
-            name = name.ToLower();
-
-            foreach(Games game in gameList)
-            {
-                game_name = game.name.ToLower();
-
-                if (string.Compare(game_name, name, false) == 0)
-                {
-                    games.Insert(j, game);
-                    j++;
-                }
-                else if (game_name.Contains(name))
-                    games.Add(game);
-            }
-
-            return games;
         }
 
     }
