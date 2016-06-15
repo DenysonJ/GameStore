@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace GameStore
@@ -6,7 +7,8 @@ namespace GameStore
     public partial class Login_GUI : Form
     {
 
-        public string user { get; set; }
+        public int userID;
+        ClientManager client = new ClientManager();
 
         public Login_GUI()
         {
@@ -21,14 +23,14 @@ namespace GameStore
         private void Login_btn_Click(object sender, EventArgs e)
         {
             string password = Password_tb.Text;
-            user = Login_tb.Text;
+            string user = Login_tb.Text;            
 
-            if (Login_tb.Text == "admin")
+            if ((Login_tb.Text == "admin") && (password == "ESGames123"))
             {
                 DialogResult = DialogResult.OK;
                 Close();
             }
-            else if(true) //trocar por if(password == passwordPegoNoBancoDeDados)
+            else if(client.validate(password, ref userID))
             {
                 DialogResult = DialogResult.Yes;
                 Close();

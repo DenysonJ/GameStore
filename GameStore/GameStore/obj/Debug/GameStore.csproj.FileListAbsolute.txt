@@ -31,3 +31,6 @@ C:\Users\Vmrfreitas\Desktop\ \Meus Programas\Game Store\game-store\GameStore\Ga
 C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.deleteUser_GUI.resources
 C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.newUser_GUI.resources
 C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.store_iGUI2.resources
+D:\Denyson\Repos\gamestore\GameStore\GameStore\bin\Debug\GameStore.exe.config
+D:\Denyson\Repos\gamestore\GameStore\GameStore\obj\Debug\GameStore.exe
+D:\Denyson\Repos\gamestore\GameStore\GameStore\obj\Debug\GameStore.pdb

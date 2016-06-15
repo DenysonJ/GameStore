@@ -1,10 +1,50 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace GameStore
 {
-    
+    public class ClientManager
+    {
+        public bool validate(string password, ref int userID)
+        {
+
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT" + user + "FROM UserTable", connection);
+            SqlDataReader reader;
+
+            try
+            {
+                connection.Open();
+                reader = cmd.ExecuteReader();
+
+                reader.Read();
+
+                if(reader.GetFieldValue<string>(3) == password)
+                {
+                    userID = reader.GetFieldType<int>(0);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+            }
+
+            return false;
+        }
+
+    }
+
     public class GameManager
     {
         private gamelist gl = new gamelist();
