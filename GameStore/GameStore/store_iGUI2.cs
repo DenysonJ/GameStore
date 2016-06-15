@@ -13,16 +13,24 @@ namespace GameStore
 {
     public partial class store_iGUI2 : Form
     {
-        private bool adminModeOn = false;
+        private bool adminModeOn = false, adminRemoveOn = false;
         private int GameID, receiverID;
         private List<int> indexer = new List<int>();
         public store_iGUI2(int user, int GameId, int platformindex, bool availableonly)
         {
             InitializeComponent();
             if (user == -1)
+            {
                 adminModeOn = true;
-            else
+            }
+            else if (user >= 0)
+            {
                 receiverID = user;
+            }
+            else if (user == -2)
+            {
+                adminRemoveOn = true;
+            }
             GameID = GameId;
             fillplatCombobox();
             platform_comboBox.SelectedIndex = platformindex;
@@ -37,6 +45,10 @@ namespace GameStore
                 receiver_comboBox.Visible = true;
                 receiver_label.Visible = true;
                 fillreceiverCombobox();
+            }
+            if (adminRemoveOn)
+            {
+                rentGame_button.Text = "Excluir Jogo";
             }
         }
         private void fillreceiverCombobox()
@@ -254,59 +266,17 @@ namespace GameStore
 
         private void rentGame_button_Click(object sender, EventArgs e)
         {
-            if (adminModeOn)
-            {
-                receiverID = receiver_comboBox.SelectedIndex;
-            }
-            bool error = true;
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
-            SqlConnection con = new SqlConnection(strcon);
-            SqlCommand com = new SqlCommand("SELECT * FROM  UserTable WHERE UserID=" + receiverID + ";", con);
-            try
+            if (adminRemoveOn)
             {
-                con.Open();
-                com.ExecuteNonQuery();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataTable ds = new DataTable();
-                da.SelectCommand = com;
-                da.Fill(ds);
-                if (ds.Rows[0].Field<int>("Counter") > 0)
-                {
-                    if(ds.Rows[0].Field<int>("Rented") == -1)
-                        error = false;
-                    else
-                        if (adminModeOn)
-                            MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
-                        else
-                            MessageBox.Show("Você não pode locar jogos.\n É necessário devolver antes de locar novamente.");
-                }
-                else
-                    if(adminModeOn)
-                        MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
-                    else
-                        MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro " + ex.Message);
-                throw;
-            }
-            finally
-            {
-                con.Close();
-            }
-
-            if (!error)
-            {
-
                 SqlConnection connection = new SqlConnection(strcon);
-                SqlCommand cmd = new SqlCommand("UPDATE FisGameTable SET Available=0 WHERE FisGameId=" + indexer[gamesView.SelectedIndices[0]] + "; UPDATE UserTable SET Rented=" + indexer[gamesView.SelectedIndices[0]] + " WHERE UserID=" + receiverID + ";", connection);
+                SqlCommand cmd = new SqlCommand("DELETE FROM FisGameTable WHERE FisGameId = '" + indexer[gamesView.SelectedIndices[0]].ToString() + "';", connection);
                 try
                 {
                     connection.Open();
                     cmd.ExecuteNonQuery();
+
+
                 }
                 catch (Exception ex)
                 {
@@ -317,8 +287,125 @@ namespace GameStore
                 {
                     connection.Close();
                 }
-                this.Close();
             }
+            else
+            {
+                if (adminModeOn)
+                {
+                    SqlConnection conn = new SqlConnection(strcon);
+                    SqlCommand comm = new SqlCommand("SELECT * FROM  UserTable WHERE Login=" + receiver_comboBox.Text + ";", conn);
+                    try
+                    {
+                        conn.Open();
+                        comm.ExecuteNonQuery();
+                        SqlDataAdapter da = new SqlDataAdapter();
+                        DataTable ds = new DataTable();
+                        da.SelectCommand = comm;
+                        da.Fill(ds);
+
+                        receiverID = ds.Rows[0].Field<int>("UserID");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erro " + ex.Message);
+                        throw;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+                bool Continue = true;
+                SqlConnection conne = new SqlConnection(strcon);
+                SqlCommand comma = new SqlCommand("SELECT * FROM  FisGameTable WHERE FisGameId=" + indexer[gamesView.SelectedIndices[0]] + ";", conne);
+                try
+                {
+                    conne.Open();
+                    comma.ExecuteNonQuery();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataTable ds = new DataTable();
+                    da.SelectCommand = comma;
+                    da.Fill(ds);
+
+                    if (!ds.Rows[0].Field<bool>("Available"))
+                    {
+                        MessageBox.Show("Este jogo não está disponível.");
+                        Continue = false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro " + ex.Message);
+                    throw;
+                }
+                finally
+                {
+                    conne.Close();
+                }
+                if (Continue)
+                {
+                    bool error = true;
+                    SqlConnection con = new SqlConnection(strcon);
+                    SqlCommand com = new SqlCommand("SELECT * FROM  UserTable WHERE UserID=" + receiverID + ";", con);
+                    try
+                    {
+                        con.Open();
+                        com.ExecuteNonQuery();
+                        SqlDataAdapter da = new SqlDataAdapter();
+                        DataTable ds = new DataTable();
+                        da.SelectCommand = com;
+                        da.Fill(ds);
+                        if (ds.Rows[0].Field<int>("Counter") > 0)
+                        {
+                            if (ds.Rows[0].Field<int>("Rented") == -1)
+                                error = false;
+                            else
+                                if (adminModeOn)
+                                MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
+                            else
+                                MessageBox.Show("Você não pode locar jogos.\n É necessário devolver antes de locar novamente.");
+                        }
+                        else
+                            if (adminModeOn)
+                            MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+                        else
+                            MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Erro " + ex.Message);
+                        throw;
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+
+                    if (!error)
+                    {
+
+                        SqlConnection connection = new SqlConnection(strcon);
+                        SqlCommand cmd = new SqlCommand("UPDATE FisGameTable SET Available=0 WHERE FisGameId=" + indexer[gamesView.SelectedIndices[0]] + "; UPDATE UserTable SET Rented=" + indexer[gamesView.SelectedIndices[0]] + " WHERE UserID=" + receiverID + ";", connection);
+                        try
+                        {
+                            connection.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Erro " + ex.Message);
+                            throw;
+                        }
+                        finally
+                        {
+                            connection.Close();
+                        }
+                    }
+                }
+            }
+            SearchAndShow();
         }
     }
 }

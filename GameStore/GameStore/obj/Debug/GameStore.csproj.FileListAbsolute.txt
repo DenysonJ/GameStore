@@ -68,3 +68,4 @@ D:\Denyson\Repos\gamestore\GameStore\GameStore\obj\Debug\GameStore.csproj.Genera
 D:\Denyson\Repos\gamestore\GameStore\GameStore\obj\Debug\GameStore.exe
 D:\Denyson\Repos\gamestore\GameStore\GameStore\obj\Debug\GameStore.pdb
 D:\Denyson\Repos\gamestore\GameStore\GameStore\obj\Debug\GameStore.AboutBox1.resources
+C:\Users\Rubens I\gamestore\GameStore\GameStore\obj\Debug\GameStore.AboutBox1.resources

@@ -56,8 +56,8 @@ namespace GameStore
 
         private void button_insertgame_Click(object sender, EventArgs e)
         {
-            int FisGameId, GameId;
-            bool exist;
+            int FisGameId = -1, GameId = -1;
+            bool exist = false;
 
             string name = name_textBox.Text;
             if (name.Contains("'")) {
@@ -68,6 +68,8 @@ namespace GameStore
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
+            SqlCommand cmd2 = new SqlCommand("SELECT * FROM FisGameTable", connection);
+
             try
             {
                 connection.Open();
@@ -88,12 +90,21 @@ namespace GameStore
                     GameId = foundRows[0].Field<int>("GameID");
                     exist = true;
                 }
-                FisGameId = ds.Rows.Count;
+                ds.Clear();
+                da.SelectCommand = cmd2;
+                da.Fill(ds);
+                foreach(DataRow fisgame in ds.Rows)
+                {
+                    if (FisGameId < fisgame.Field<int>("FisGameId"))
+                    {
+                        FisGameId = fisgame.Field<int>("FisGameId");
+                    }
+                }
+                FisGameId++;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro " + ex.Message);
-                throw;
             }
             finally
             {
@@ -127,7 +138,7 @@ namespace GameStore
             }
 
             SqlConnection conne = new SqlConnection(strcon);
-            SqlCommand comma = new SqlCommand("UPDATE UserTable SET Counter=Counter+4 WHERE Owner="+owner_comboBox.SelectedIndex+"; UPDATE UserTable SET List=CONCAT(List,"+FisGameId.ToString()+") WHERE Owner="+owner_comboBox.SelectedIndex+";", conne);
+            SqlCommand comma = new SqlCommand("UPDATE UserTable SET Counter=Counter+4 WHERE Login="+owner_comboBox.Text+"; UPDATE UserTable SET List=CONCAT(List,"+FisGameId.ToString()+") WHERE Login="+owner_comboBox.Text+";", conne);
             try
             {
                 conne.Open();
@@ -136,7 +147,6 @@ namespace GameStore
             catch (Exception ex)
             {
                 MessageBox.Show("Erro " + ex.Message);
-                throw;
             }
             finally
             {
