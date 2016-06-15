@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace GameStore
@@ -25,7 +27,7 @@ namespace GameStore
 
                 while (reader.Read())
                 {
-                    string name = reader.GetString(4);      //4 is platform index in fisgametable
+                    string name = reader.GetString(4);      //4 is login index in fisgametable
                     names.Add(name);
                 }
 
@@ -129,8 +131,5 @@ namespace GameStore
 
             return Genre;
         }
-
-
-
     }
 }

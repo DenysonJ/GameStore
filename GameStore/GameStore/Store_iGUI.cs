@@ -21,6 +21,7 @@ namespace GameStore
 
             InitializeComponent();
 
+
             names = game_manager.LoadPlatformCombobox();
 
             foreach(string name in names)
@@ -72,6 +73,7 @@ namespace GameStore
             gamesView.Columns.Add("Developer", 80);
             gamesView.Columns.Add("Gênero");
             gamesView.Columns.Add("Descrição", 120);
+
         }
 
         private bool checkstatetobool(CheckState chk)
