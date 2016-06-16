@@ -56,8 +56,8 @@ namespace GameStore
 
         private void button_insertgame_Click(object sender, EventArgs e)
         {
-            int FisGameId, GameId;
-            bool exist;
+            int FisGameId = -1, GameId = -1;
+            bool exist = false;
 
             string name = name_textBox.Text;
             if (name.Contains("'")) {
@@ -68,6 +68,8 @@ namespace GameStore
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
+            SqlCommand cmd2 = new SqlCommand("SELECT * FROM FisGameTable", connection);
+
             try
             {
                 connection.Open();
@@ -88,12 +90,21 @@ namespace GameStore
                     GameId = foundRows[0].Field<int>("GameID");
                     exist = true;
                 }
-                FisGameId = ds.Rows.Count;
+                ds.Clear();
+                da.SelectCommand = cmd2;
+                da.Fill(ds);
+                foreach(DataRow fisgame in ds.Rows)
+                {
+                    if (FisGameId < fisgame.Field<int>("FisGameId"))
+                    {
+                        FisGameId = fisgame.Field<int>("FisGameId");
+                    }
+                }
+                FisGameId++;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro " + ex.Message);
-                throw;
             }
             finally
             {
@@ -108,12 +119,9 @@ namespace GameStore
                     this.Close();
             }
 
-            Console.WriteLine(FisGameId.ToString() + "','" + GameId.ToString() + "','" + Platform_textBox.Text + "','" + buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd") + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text + "','" + checkstatetobool(Available_checkBox.CheckState));
-
             //insere na FisGameTable
             SqlConnection conn = new SqlConnection(strcon);
             SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values('" + FisGameId.ToString() + "','" +  GameId.ToString() +"','" + Platform_textBox.Text +"','"  +buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd")  + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text +"','"+ checkstatetobool(Available_checkBox.CheckState) + "');", conn);
-            Console.Write( com.ToString());
             try
             {
                 conn.Open();
@@ -128,6 +136,23 @@ namespace GameStore
             {
                 conn.Close();
             }
+
+            SqlConnection conne = new SqlConnection(strcon);
+            SqlCommand comma = new SqlCommand("UPDATE UserTable SET Counter=Counter+4 WHERE Login="+owner_comboBox.Text+"; UPDATE UserTable SET List=CONCAT(List,"+FisGameId.ToString()+") WHERE Login="+owner_comboBox.Text+";", conne);
+            try
+            {
+                conne.Open();
+                comma.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+            }
+            finally
+            {
+                conne.Close();
+            }
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

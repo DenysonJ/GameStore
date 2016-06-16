@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace GameStore
@@ -19,125 +17,88 @@ namespace GameStore
 
         public Store_iGUI(int User)
         {
+            List<string> names;
+
             InitializeComponent();
-            FillPlatformCombobox();
+
+            if(User >= 0)
+            {
+                viewToolStripMenuItem.Visible = true;
+            }else
+            {
+                viewToolStripMenuItem.Visible = false;
+            }
+
+            names = game_manager.LoadPlatformCombobox();
+
+            foreach (string name in names)
+            {
+                platform_comboBox.Items.Add(name);
+            }
+
             platform_comboBox.SelectedIndex = 0;
             user = User;
-        }
-        private void FillPlatformCombobox()
-        {
-
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
-            SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT * FROM FisGameTable", connection);
-            SqlDataReader reader;
-            try
-            {
-                connection.Open();
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    string name = reader.GetString(4);      //4 is login index in fisgametable
-                    platform_comboBox.Items.Add(name);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro " + ex.Message);
-                throw;
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
-
-        private void gamesViewClear() {
-            gamesView.Clear();
-            gamesView.Columns.Add("Capa", 80);
-            gamesView.Columns.Add("Nome");
-            gamesView.Columns.Add("Ano");
-            gamesView.Columns.Add("Developer");
-            gamesView.Columns.Add("Gênero");
-            gamesView.Columns.Add("Descrição");
         }
 
         private void Store_iGUI_Load(object sender, EventArgs e)
         {
+            List<string> imagens = new List<string>();
+            List<ListViewItem> items = new List<ListViewItem>();
+
             gamesView.View = View.Details;
             imageList1.ImageSize = new Size(64, 64);
 
-            game_manager.LoadGameList();
-
             gamesViewClear();
 
-            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
-            SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT * FROM GameTable", connection);
-            try
-            {
-                connection.Open();
-                cmd.ExecuteNonQuery();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataTable ds = new DataTable();
-                da.SelectCommand = cmd;
-                da.Fill(ds);
-                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };
+            items = game_manager.LoadList(ref globalimageindex, ref imagens, ref indexer);
 
-                foreach (DataRow game in ds.Rows)
+            foreach (string image in imagens)
+            {
+                if (image != "null")
                 {
-                    ListViewItem ite = new ListViewItem();
-                    if (game.Field<string>("Image") != null)
-                    {
-                        Image cov = Image.FromFile(game.Field<string>("Image"));
-                        imageList1.Images.Add(cov);
-                    }
-                    else
-                    {
-                        imageList1.Images.Add(Image.FromFile("..\\..\\Resources\\null.png"));
-                    }
-                    ite.ImageIndex = globalimageindex++;
-
-                    indexer.Add(game.Field<int>("GameID"));
-
-                    ite.SubItems.Add(game.Field<string>("Name"));
-                    ite.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
-                    ite.SubItems.Add(game.Field<string>("Developer"));
-                    ite.SubItems.Add(genreConverter(game.Field<int>("Genre")));
-                    ite.SubItems.Add(game.Field<string>("Description"));
-
-                    gamesView.Items.Add(ite);
+                    Image cov = Image.FromFile(image);
+                    imageList1.Images.Add(cov);
                 }
+                else
+                {
+                    imageList1.Images.Add(Image.FromFile("..\\..\\Resources\\null.png"));
+                }
+            }
 
-            }
-            catch (Exception ex)
+            foreach (ListViewItem item in items)
             {
-                MessageBox.Show("Erro " + ex.Message);
-                throw;
+                gamesView.Items.Add(item);
             }
-            finally
-            {
-                connection.Close();
-            }
-            Search();
         }
+
+        private void gamesViewClear()
+        {
+            gamesView.Clear();
+            gamesView.Columns.Add("Capa", 80);
+            gamesView.Columns.Add("Nome");
+            gamesView.Columns.Add("Ano");
+            gamesView.Columns.Add("Developer", 80);
+            gamesView.Columns.Add("Gênero");
+            gamesView.Columns.Add("Descrição", 120);
+
+        }
+
         private bool checkstatetobool(CheckState chk)
         {
             if (chk == CheckState.Checked)
-                return true; 
+                return true;
             else
-                return false; 
+                return false;
         }
 
         private bool availableTest(bool gameav, CheckState chkbox)
         {
-            return (!checkstatetobool(chkbox))||(gameav && checkstatetobool(chkbox));
+            return (!checkstatetobool(chkbox)) || (gameav && checkstatetobool(chkbox));
         }
 
 
-        private void ShowOnGameView(int gameid) {   //mostra o jogo no gameview a partir da gameid
+        private void ShowOnGameView(int gameid)
+        {   //mostra o jogo no gameview a partir da gameid
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
@@ -150,14 +111,14 @@ namespace GameStore
                 DataTable ds = new DataTable();
                 da.SelectCommand = cmd;
                 da.Fill(ds);
-                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"]};       //não sei pq, mas ao pegar a tabela da database ela perde a primary key
+                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };       //ao pegar a tabela da database ela perde a primary key
                 DataRow game = ds.Rows.Find(gameid);
                 ListViewItem item = new ListViewItem();
 
                 item.ImageIndex = game.Field<int>("GameID");
                 item.SubItems.Add(game.Field<string>("Name"));
                 item.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
-                item.SubItems.Add(game.Field<string>("Developer")); 
+                item.SubItems.Add(game.Field<string>("Developer"));
                 item.SubItems.Add(genreConverter(game.Field<int>("Genre")));
                 item.SubItems.Add(game.Field<string>("Description"));
 
@@ -167,7 +128,6 @@ namespace GameStore
             catch (Exception ex)
             {
                 MessageBox.Show("Erro " + ex.Message);
-                throw;
             }
             finally
             {
@@ -175,7 +135,8 @@ namespace GameStore
             }
         }
 
-        private string genreConverter(int genr) { //traduz o gender de int pra string
+        private string genreConverter(int genr)
+        { //traduz o gender de int pra string
             string Genre = "";
             if (~(genr | (~Constants.game_type_action)) == 0x00)
                 Genre += "Ação ";
@@ -193,9 +154,9 @@ namespace GameStore
                 Genre += "Shooter ";
             if (~(genr | (~Constants.game_type_RPG)) == 0x00)
                 Genre += "RPG ";
-            
-            if(Genre == "")
-                 Genre = "none";
+
+            if (Genre == "")
+                Genre = "none";
 
             return Genre;
         }
@@ -244,7 +205,7 @@ namespace GameStore
         {
             if (txt_search.Text == "Digite o nome do jogo")
                 txt_search.Text = string.Empty;
-            
+
         }
 
         private void txt_search_Leave(object sender, EventArgs e)
@@ -268,6 +229,7 @@ namespace GameStore
         {
             Search();
         }
+
         private void Search()
         {
             String keywords;
@@ -423,5 +385,43 @@ namespace GameStore
             }
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 about = new AboutBox1();
+
+            about.Show();
+        }
+
+        private void devolverJogoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int alugado = -1;
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM UserTable WHERE UserID=" + user + ";", connection);
+            SqlCommand cm = new SqlCommand("UPDATE UserTable SET Rented=-1 WHERE UserID=" + user + ";", connection);
+            try
+            {
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataTable ds = new DataTable();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                alugado = ds.Rows[0].Field<int>("Rented");
+
+                cm.ExecuteNonQuery();
+                SqlCommand comm = new SqlCommand("UPDATE FisGameTable SET Available=1 WHERE FisGameID=" + alugado.ToString() + ";", connection);
+                comm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

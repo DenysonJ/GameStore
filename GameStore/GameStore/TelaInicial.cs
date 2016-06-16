@@ -44,7 +44,10 @@ namespace GameStore
 
         private void deleteGame_button_Click(object sender, EventArgs e)
         {
-
+            Store_iGUI storeform = new Store_iGUI(-2);
+            this.Hide();
+            storeform.ShowDialog();
+            this.Show();
         }
     }
 }

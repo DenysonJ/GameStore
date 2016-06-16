@@ -32,9 +32,12 @@
             System.Windows.Forms.Label platformLabel;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label5;
+            System.Windows.Forms.Label invalidLogin_label;
+            System.Windows.Forms.Label invalidEmail_label;
+            System.Windows.Forms.Label passwords_label;
             this.cancel_button = new System.Windows.Forms.Button();
             this.birthdate_dateTimePicker = new System.Windows.Forms.DateTimePicker();
-            this.Platform_textBox = new System.Windows.Forms.TextBox();
+            this.Login_textBox = new System.Windows.Forms.TextBox();
             this.name_textBox = new System.Windows.Forms.TextBox();
             this.button_insertuser = new System.Windows.Forms.Button();
             this.label_gamename = new System.Windows.Forms.Label();
@@ -49,37 +52,10 @@
             platformLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
+            invalidLogin_label = new System.Windows.Forms.Label();
+            invalidEmail_label = new System.Windows.Forms.Label();
+            passwords_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // cancel_button
-            // 
-            this.cancel_button.Location = new System.Drawing.Point(26, 311);
-            this.cancel_button.Name = "cancel_button";
-            this.cancel_button.Size = new System.Drawing.Size(75, 23);
-            this.cancel_button.TabIndex = 53;
-            this.cancel_button.Text = "Cancelar";
-            this.cancel_button.UseVisualStyleBackColor = true;
-            // 
-            // birthdate_dateTimePicker
-            // 
-            this.birthdate_dateTimePicker.Location = new System.Drawing.Point(131, 272);
-            this.birthdate_dateTimePicker.Name = "birthdate_dateTimePicker";
-            this.birthdate_dateTimePicker.Size = new System.Drawing.Size(130, 20);
-            this.birthdate_dateTimePicker.TabIndex = 49;
-            // 
-            // Platform_textBox
-            // 
-            this.Platform_textBox.Location = new System.Drawing.Point(131, 91);
-            this.Platform_textBox.Name = "Platform_textBox";
-            this.Platform_textBox.Size = new System.Drawing.Size(130, 20);
-            this.Platform_textBox.TabIndex = 48;
-            // 
-            // name_textBox
-            // 
-            this.name_textBox.Location = new System.Drawing.Point(131, 55);
-            this.name_textBox.Name = "name_textBox";
-            this.name_textBox.Size = new System.Drawing.Size(130, 20);
-            this.name_textBox.TabIndex = 47;
             // 
             // buyDateLabel
             // 
@@ -99,6 +75,78 @@
             platformLabel.TabIndex = 43;
             platformLabel.Text = "Login";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(12, 167);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(85, 13);
+            label1.TabIndex = 55;
+            label1.Text = "Confirmar Senha";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(15, 239);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(49, 13);
+            label5.TabIndex = 59;
+            label5.Text = "Telefone";
+            // 
+            // invalidLogin_label
+            // 
+            invalidLogin_label.AutoSize = true;
+            invalidLogin_label.ForeColor = System.Drawing.Color.Red;
+            invalidLogin_label.Location = new System.Drawing.Point(131, 112);
+            invalidLogin_label.Name = "invalidLogin_label";
+            invalidLogin_label.Size = new System.Drawing.Size(101, 13);
+            invalidLogin_label.TabIndex = 62;
+            invalidLogin_label.Text = "Este Login já existe.";
+            invalidLogin_label.Visible = false;
+            // 
+            // invalidEmail_label
+            // 
+            invalidEmail_label.AutoSize = true;
+            invalidEmail_label.ForeColor = System.Drawing.Color.Red;
+            invalidEmail_label.Location = new System.Drawing.Point(131, 220);
+            invalidEmail_label.Name = "invalidEmail_label";
+            invalidEmail_label.Size = new System.Drawing.Size(100, 13);
+            invalidEmail_label.TabIndex = 63;
+            invalidEmail_label.Text = "Este Email já existe.";
+            invalidEmail_label.Visible = false;
+            // 
+            // cancel_button
+            // 
+            this.cancel_button.Location = new System.Drawing.Point(26, 311);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(75, 23);
+            this.cancel_button.TabIndex = 53;
+            this.cancel_button.Text = "Cancelar";
+            this.cancel_button.UseVisualStyleBackColor = true;
+            this.cancel_button.Click += new System.EventHandler(this.cancel_button_Click);
+            // 
+            // birthdate_dateTimePicker
+            // 
+            this.birthdate_dateTimePicker.Location = new System.Drawing.Point(131, 272);
+            this.birthdate_dateTimePicker.Name = "birthdate_dateTimePicker";
+            this.birthdate_dateTimePicker.Size = new System.Drawing.Size(130, 20);
+            this.birthdate_dateTimePicker.TabIndex = 49;
+            // 
+            // Login_textBox
+            // 
+            this.Login_textBox.Location = new System.Drawing.Point(131, 91);
+            this.Login_textBox.Name = "Login_textBox";
+            this.Login_textBox.Size = new System.Drawing.Size(130, 20);
+            this.Login_textBox.TabIndex = 48;
+            this.Login_textBox.TextChanged += new System.EventHandler(this.Login_textBox_TextChanged);
+            // 
+            // name_textBox
+            // 
+            this.name_textBox.Location = new System.Drawing.Point(131, 55);
+            this.name_textBox.Name = "name_textBox";
+            this.name_textBox.Size = new System.Drawing.Size(130, 20);
+            this.name_textBox.TabIndex = 47;
+            // 
             // button_insertuser
             // 
             this.button_insertuser.Location = new System.Drawing.Point(159, 311);
@@ -107,6 +155,7 @@
             this.button_insertuser.TabIndex = 42;
             this.button_insertuser.Text = "Inserir Usuário";
             this.button_insertuser.UseVisualStyleBackColor = true;
+            this.button_insertuser.Click += new System.EventHandler(this.button_insertuser_Click);
             // 
             // label_gamename
             // 
@@ -130,8 +179,10 @@
             // 
             this.confirmPassword_textBox.Location = new System.Drawing.Point(131, 164);
             this.confirmPassword_textBox.Name = "confirmPassword_textBox";
+            this.confirmPassword_textBox.PasswordChar = '*';
             this.confirmPassword_textBox.Size = new System.Drawing.Size(130, 20);
             this.confirmPassword_textBox.TabIndex = 57;
+            this.confirmPassword_textBox.TextChanged += new System.EventHandler(this.confirmPassword_textBox_TextChanged);
             // 
             // password_textBox
             // 
@@ -139,15 +190,7 @@
             this.password_textBox.Name = "password_textBox";
             this.password_textBox.Size = new System.Drawing.Size(130, 20);
             this.password_textBox.TabIndex = 56;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(12, 167);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(85, 13);
-            label1.TabIndex = 55;
-            label1.Text = "Confirmar Senha";
+            this.password_textBox.TextChanged += new System.EventHandler(this.password_textBox_TextChanged);
             // 
             // label2
             // 
@@ -171,15 +214,7 @@
             this.email_textBox.Name = "email_textBox";
             this.email_textBox.Size = new System.Drawing.Size(130, 20);
             this.email_textBox.TabIndex = 60;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(15, 239);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(49, 13);
-            label5.TabIndex = 59;
-            label5.Text = "Telefone";
+            this.email_textBox.TextChanged += new System.EventHandler(this.email_textBox_TextChanged);
             // 
             // label6
             // 
@@ -190,11 +225,25 @@
             this.label6.TabIndex = 58;
             this.label6.Text = "email";
             // 
+            // passwords_label
+            // 
+            passwords_label.AutoSize = true;
+            passwords_label.ForeColor = System.Drawing.Color.Red;
+            passwords_label.Location = new System.Drawing.Point(127, 187);
+            passwords_label.Name = "passwords_label";
+            passwords_label.Size = new System.Drawing.Size(150, 13);
+            passwords_label.TabIndex = 64;
+            passwords_label.Text = "As senhas não correspondem.";
+            passwords_label.Visible = false;
+            // 
             // newUser_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(276, 346);
+            this.Controls.Add(passwords_label);
+            this.Controls.Add(invalidEmail_label);
+            this.Controls.Add(invalidLogin_label);
             this.Controls.Add(this.phone_textBox);
             this.Controls.Add(this.email_textBox);
             this.Controls.Add(label5);
@@ -205,7 +254,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.birthdate_dateTimePicker);
-            this.Controls.Add(this.Platform_textBox);
+            this.Controls.Add(this.Login_textBox);
             this.Controls.Add(this.name_textBox);
             this.Controls.Add(buyDateLabel);
             this.Controls.Add(platformLabel);
@@ -223,7 +272,7 @@
 
         private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.DateTimePicker birthdate_dateTimePicker;
-        private System.Windows.Forms.TextBox Platform_textBox;
+        private System.Windows.Forms.TextBox Login_textBox;
         private System.Windows.Forms.TextBox name_textBox;
         private System.Windows.Forms.Button button_insertuser;
         private System.Windows.Forms.Label label_gamename;
