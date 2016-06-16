@@ -364,10 +364,10 @@ namespace GameStore
 
                         foreach (DataRow user in ds.Rows)
                         {
-                            MessageBox.Show("Entrei " + user.Field<int>("UserID").ToString() + receiverID.ToString());
+                            
                             if (user.Field<int>("UserID") == receiverID)
                             {
-                                MessageBox.Show("Entrei " + user.Field<int>("UserID").ToString() + receiverID.ToString());
+                                
                                 if (user.Field<int>("Counter") > 0)
                                 {
                                     if (user.Field<int>("Rented") == -1)
