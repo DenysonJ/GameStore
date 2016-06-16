@@ -870,7 +870,7 @@ namespace GameStore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public GameTableRow AddGameTableRow(int GameID, string Name, string Developer, int ReleaseYear, int Gender, string Description, byte[] Image) {
+            public GameTableRow AddGameTableRow(int GameID, string Name, string Developer, int ReleaseYear, int Gender, string Description, string Image) {
                 GameTableRow rowGameTableRow = ((GameTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         GameID,
@@ -933,7 +933,7 @@ namespace GameStore {
                 base.Columns.Add(this.columnGender);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
-                this.columnImage = new global::System.Data.DataColumn("Image", typeof(byte[]), null, global::System.Data.MappingType.Element);
+                this.columnImage = new global::System.Data.DataColumn("Image", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnImage);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnGameID}, true));
@@ -2039,10 +2039,10 @@ namespace GameStore {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public byte[] Image {
+            public string Image {
                 get {
                     try {
-                        return ((byte[])(this[this.tableGameTable.ImageColumn]));
+                        return ((string)(this[this.tableGameTable.ImageColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'Image\' in table \'GameTable\' is DBNull.", e);

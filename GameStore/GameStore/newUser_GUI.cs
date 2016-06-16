@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameStore
@@ -16,13 +11,15 @@ namespace GameStore
         public newUser_GUI()
         {
             InitializeComponent();
-            invalidLogin_label.Visible = false;
-            invalidEmail_label.Visible = false;
+            LoginInvalid_label.Visible = false;
+            EmailInvalid_label.Visible = false;
+            
+            
         }
 
         private void button_insertuser_Click(object sender, EventArgs e)
         {
-            if ((!invalidLogin_label.Visible) && (!invalidEmail_label.Visible))
+            if ((!LoginInvalid_label.Visible) && (!EmailInvalid_label.Visible))
             {
                 if (password_textBox.Text == confirmPassword_textBox.Text)
                 {
@@ -75,7 +72,7 @@ namespace GameStore
                 {
                     if (user.Field<string>("Login") == Login_textBox.Text)
                     {
-                        invalidLogin_label.Visible = true;
+                        LoginInvalid_label.Visible = true;
                         Login_textBox.BackColor = Color.Red;
                         find = true;
                         break;
@@ -84,7 +81,7 @@ namespace GameStore
                 if (!find)
                 {
                     Login_textBox.BackColor = this.BackColor;
-                    invalidLogin_label.Visible = false;
+                    LoginInvalid_label.Visible = false;
                 }
                 }
             catch (Exception ex)
@@ -116,7 +113,7 @@ namespace GameStore
                 {
                     if (user.Field<string>("email") == email_textBox.Text)
                     {
-                        invalidEmail_label.Visible = true;
+                        EmailInvalid_label.Visible = true;
                         email_textBox.BackColor = Color.Red;
                         find = true;
                         break;
@@ -125,7 +122,7 @@ namespace GameStore
                 if (!find)
                 {
                     email_textBox.BackColor = this.BackColor;
-                    invalidEmail_label.Visible = false;
+                    EmailInvalid_label.Visible = false;
                 }
 
             }
@@ -154,12 +151,13 @@ namespace GameStore
         {
             if(password_textBox.Text == confirmPassword_textBox.Text)
             {
-                passwords_label.Visible = false;
+                senhas_incorretas_label.Visible = false;
             }
             else
             {
-                passwords_label.Visible = true;
+                senhas_incorretas_label.Visible = true;
             }
         }
+
     }
 }

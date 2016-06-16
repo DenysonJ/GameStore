@@ -397,8 +397,8 @@ namespace GameStore
             int alugado = -1;
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd = new SqlCommand("SELECT * FROM UserTable WHERE UserID=" + user + ";", connection);
-            SqlCommand cm = new SqlCommand("UPDATE UserTable SET Rented=-1 WHERE UserID=" + user + ";", connection);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM UserTable;", connection);
+            SqlCommand cm = new SqlCommand("UPDATE UserTable SET Rented=-1 WHERE UserID= '" + user + "';", connection);
             try
             {
                 connection.Open();
@@ -407,21 +407,27 @@ namespace GameStore
                 DataTable ds = new DataTable();
                 da.SelectCommand = cmd;
                 da.Fill(ds);
-                alugado = ds.Rows[0].Field<int>("Rented");
+                foreach(DataRow row in ds.Rows)
+                {
+                    if (row.Field<int>("UserID") == user)
+                        alugado = row.Field<int>("Rented");
+                
+                }
+                //alugado = ds.Rows[0].Field<int>("Rented");
 
                 cm.ExecuteNonQuery();
-                SqlCommand comm = new SqlCommand("UPDATE FisGameTable SET Available=1 WHERE FisGameID=" + alugado.ToString() + ";", connection);
+                SqlCommand comm = new SqlCommand("UPDATE FisGameTable SET Available=1 WHERE FisGameID='" + alugado.ToString() + "';", connection);
                 comm.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro " + ex.Message);
-                throw;
             }
             finally
             {
                 connection.Close();
             }
+            MessageBox.Show("Jogo devolvido com sucesso");
         }
     }
 }

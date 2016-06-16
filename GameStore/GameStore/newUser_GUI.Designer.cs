@@ -32,9 +32,6 @@
             System.Windows.Forms.Label platformLabel;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label5;
-            System.Windows.Forms.Label invalidLogin_label;
-            System.Windows.Forms.Label invalidEmail_label;
-            System.Windows.Forms.Label passwords_label;
             this.cancel_button = new System.Windows.Forms.Button();
             this.birthdate_dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.Login_textBox = new System.Windows.Forms.TextBox();
@@ -48,13 +45,13 @@
             this.phone_textBox = new System.Windows.Forms.TextBox();
             this.email_textBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.LoginInvalid_label = new System.Windows.Forms.Label();
+            this.senhas_incorretas_label = new System.Windows.Forms.Label();
+            this.EmailInvalid_label = new System.Windows.Forms.Label();
             buyDateLabel = new System.Windows.Forms.Label();
             platformLabel = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
-            invalidLogin_label = new System.Windows.Forms.Label();
-            invalidEmail_label = new System.Windows.Forms.Label();
-            passwords_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buyDateLabel
@@ -92,28 +89,6 @@
             label5.Size = new System.Drawing.Size(49, 13);
             label5.TabIndex = 59;
             label5.Text = "Telefone";
-            // 
-            // invalidLogin_label
-            // 
-            invalidLogin_label.AutoSize = true;
-            invalidLogin_label.ForeColor = System.Drawing.Color.Red;
-            invalidLogin_label.Location = new System.Drawing.Point(131, 112);
-            invalidLogin_label.Name = "invalidLogin_label";
-            invalidLogin_label.Size = new System.Drawing.Size(101, 13);
-            invalidLogin_label.TabIndex = 62;
-            invalidLogin_label.Text = "Este Login já existe.";
-            invalidLogin_label.Visible = false;
-            // 
-            // invalidEmail_label
-            // 
-            invalidEmail_label.AutoSize = true;
-            invalidEmail_label.ForeColor = System.Drawing.Color.Red;
-            invalidEmail_label.Location = new System.Drawing.Point(131, 220);
-            invalidEmail_label.Name = "invalidEmail_label";
-            invalidEmail_label.Size = new System.Drawing.Size(100, 13);
-            invalidEmail_label.TabIndex = 63;
-            invalidEmail_label.Text = "Este Email já existe.";
-            invalidEmail_label.Visible = false;
             // 
             // cancel_button
             // 
@@ -203,14 +178,14 @@
             // 
             // phone_textBox
             // 
-            this.phone_textBox.Location = new System.Drawing.Point(134, 236);
+            this.phone_textBox.Location = new System.Drawing.Point(131, 236);
             this.phone_textBox.Name = "phone_textBox";
             this.phone_textBox.Size = new System.Drawing.Size(130, 20);
             this.phone_textBox.TabIndex = 61;
             // 
             // email_textBox
             // 
-            this.email_textBox.Location = new System.Drawing.Point(134, 200);
+            this.email_textBox.Location = new System.Drawing.Point(131, 200);
             this.email_textBox.Name = "email_textBox";
             this.email_textBox.Size = new System.Drawing.Size(130, 20);
             this.email_textBox.TabIndex = 60;
@@ -225,25 +200,44 @@
             this.label6.TabIndex = 58;
             this.label6.Text = "email";
             // 
-            // passwords_label
+            // LoginInvalid_label
             // 
-            passwords_label.AutoSize = true;
-            passwords_label.ForeColor = System.Drawing.Color.Red;
-            passwords_label.Location = new System.Drawing.Point(127, 187);
-            passwords_label.Name = "passwords_label";
-            passwords_label.Size = new System.Drawing.Size(150, 13);
-            passwords_label.TabIndex = 64;
-            passwords_label.Text = "As senhas não correspondem.";
-            passwords_label.Visible = false;
+            this.LoginInvalid_label.AutoSize = true;
+            this.LoginInvalid_label.ForeColor = System.Drawing.Color.Red;
+            this.LoginInvalid_label.Location = new System.Drawing.Point(132, 75);
+            this.LoginInvalid_label.Name = "LoginInvalid_label";
+            this.LoginInvalid_label.Size = new System.Drawing.Size(98, 13);
+            this.LoginInvalid_label.TabIndex = 65;
+            this.LoginInvalid_label.Text = "Este Login já existe";
+            // 
+            // senhas_incorretas_label
+            // 
+            this.senhas_incorretas_label.AutoSize = true;
+            this.senhas_incorretas_label.ForeColor = System.Drawing.Color.Red;
+            this.senhas_incorretas_label.Location = new System.Drawing.Point(132, 148);
+            this.senhas_incorretas_label.Name = "senhas_incorretas_label";
+            this.senhas_incorretas_label.Size = new System.Drawing.Size(124, 13);
+            this.senhas_incorretas_label.TabIndex = 66;
+            this.senhas_incorretas_label.Text = "As senhas não conferem";
+            // 
+            // EmailInvalid_label
+            // 
+            this.EmailInvalid_label.AutoSize = true;
+            this.EmailInvalid_label.ForeColor = System.Drawing.Color.Red;
+            this.EmailInvalid_label.Location = new System.Drawing.Point(131, 184);
+            this.EmailInvalid_label.Name = "EmailInvalid_label";
+            this.EmailInvalid_label.Size = new System.Drawing.Size(96, 13);
+            this.EmailInvalid_label.TabIndex = 67;
+            this.EmailInvalid_label.Text = "Este email já existe";
             // 
             // newUser_GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(276, 346);
-            this.Controls.Add(passwords_label);
-            this.Controls.Add(invalidEmail_label);
-            this.Controls.Add(invalidLogin_label);
+            this.Controls.Add(this.EmailInvalid_label);
+            this.Controls.Add(this.senhas_incorretas_label);
+            this.Controls.Add(this.LoginInvalid_label);
             this.Controls.Add(this.phone_textBox);
             this.Controls.Add(this.email_textBox);
             this.Controls.Add(label5);
@@ -283,5 +277,8 @@
         private System.Windows.Forms.TextBox phone_textBox;
         private System.Windows.Forms.TextBox email_textBox;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label LoginInvalid_label;
+        private System.Windows.Forms.Label senhas_incorretas_label;
+        private System.Windows.Forms.Label EmailInvalid_label;
     }
 }

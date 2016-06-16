@@ -126,15 +126,18 @@
     </Compile>
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="deleteUser_GUI.resx">
       <DependentUpon>deleteUser_GUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertGame2_GUI.resx">
       <DependentUpon>InsertGame2_GUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InsertGame_GUI.resx">
       <DependentUpon>InsertGame_GUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Login_GUI.resx">
       <DependentUpon>Login_GUI.cs</DependentUpon>
@@ -161,9 +164,6 @@
     <EmbeddedResource Include="TelaInicial.resx">
       <DependentUpon>TelaInicial.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

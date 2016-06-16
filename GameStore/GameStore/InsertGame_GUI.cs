@@ -138,7 +138,7 @@ namespace GameStore
             }
 
             SqlConnection conne = new SqlConnection(strcon);
-            SqlCommand comma = new SqlCommand("UPDATE UserTable SET Counter=Counter+4 WHERE Login="+owner_comboBox.Text+"; UPDATE UserTable SET List=CONCAT(List,"+FisGameId.ToString()+") WHERE Login="+owner_comboBox.Text+";", conne);
+            SqlCommand comma = new SqlCommand("UPDATE UserTable SET Counter=Counter+4 WHERE Login='"+owner_comboBox.Text+"'; UPDATE UserTable SET List=CONCAT(List,'"+FisGameId.ToString()+"') WHERE Login='"+owner_comboBox.Text+"';", conne);
             try
             {
                 conne.Open();

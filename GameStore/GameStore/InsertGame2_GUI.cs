@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GameStore
@@ -70,7 +64,8 @@ namespace GameStore
         {
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(strcon);
-            SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values ('" + GameId.ToString() + "','" + GameName + "','" + Developer_textBox.Text + "','" + ReleaseYear_textBox.Text + "','" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName +"');", con);
+            SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values (" + GameId.ToString() + ",'" + GameName + "','" + Developer_textBox.Text + "'," + int.Parse(ReleaseYear_textBox.Text).ToString()+ ",'" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName +"');", con);
+            MessageBox.Show("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values (" + GameId.ToString() + ",'" + GameName + "','" + Developer_textBox.Text + "'," + int.Parse(ReleaseYear_textBox.Text).ToString() + ",'" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName + "');");
             try
             {
                 con.Open();

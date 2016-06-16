@@ -232,22 +232,27 @@ namespace GameStore
                     if (fisGame.Field<int>("GameId") == GameID && availableTest(fisGame.Field<bool>("Available"), AvailableOnly_checkBox.CheckState) && (platform_comboBox.SelectedIndex == 0 || fisGame.Field<string>("Platform") == platform_comboBox.Text))
                     {
                         ListViewItem ite = new ListViewItem();
-                        DataRow user = ds.Tables[1].Rows.Find(fisGame.Field<int>("Owner"));
-                        ite.SubItems.Add(user.Field<string>("Login"));
-                        ite.SubItems.Add(fisGame.Field<string>("Platform"));
-                        if (fisGame.Field<DateTime?>("BuyDate").HasValue)
-                            ite.SubItems.Add(fisGame.Field<DateTime>("BuyDate").ToShortDateString());
-                        else
-                            ite.SubItems.Add("Não fornecido.");
-                        ite.SubItems.Add(fisGame.Field<string>("Avaliation"));
-                        if (fisGame.Field<bool>("Available"))
-                            ite.SubItems.Add("Disponível.");
-                        else
-                            ite.SubItems.Add("Indisponível.");
+                        foreach (DataRow user in ds.Tables[1].Rows)
+                        {
+                            if (fisGame.Field<int>("Owner") == user.Field<int>("UserID"))
+                            {
+                                ite.SubItems.Add(user.Field<string>("Login"));
+                                ite.SubItems.Add(fisGame.Field<string>("Platform"));
+                                if (fisGame.Field<DateTime?>("BuyDate").HasValue)
+                                    ite.SubItems.Add(fisGame.Field<DateTime>("BuyDate").ToShortDateString());
+                                else
+                                    ite.SubItems.Add("Não fornecido.");
+                                ite.SubItems.Add(fisGame.Field<string>("Avaliation"));
+                                if (fisGame.Field<bool>("Available"))
+                                    ite.SubItems.Add("Disponível.");
+                                else
+                                    ite.SubItems.Add("Indisponível.");
 
-                        gamesView.Items.Add(ite);
+                                gamesView.Items.Add(ite);
 
-                        indexer.Add(fisGame.Field<int>("FisGameId"));
+                                indexer.Add(fisGame.Field<int>("FisGameId"));
+                            }
+                        }
                     }
                 }
 
@@ -317,7 +322,7 @@ namespace GameStore
                 }
                 bool Continue = true;
                 SqlConnection conne = new SqlConnection(strcon);
-                SqlCommand comma = new SqlCommand("SELECT * FROM  FisGameTable WHERE FisGameId=" + indexer[gamesView.SelectedIndices[0]] + ";", conne);
+                SqlCommand comma = new SqlCommand("SELECT * FROM  FisGameTable WHERE FisGameId= '" + indexer[gamesView.SelectedIndices[0]] + "';", conne);
                 try
                 {
                     conne.Open();
@@ -346,7 +351,7 @@ namespace GameStore
                 {
                     bool error = true;
                     SqlConnection con = new SqlConnection(strcon);
-                    SqlCommand com = new SqlCommand("SELECT * FROM  UserTable WHERE UserID=" + receiverID + ";", con);
+                    SqlCommand com = new SqlCommand("SELECT * FROM  UserTable;", con);
                     try
                     {
                         con.Open();
@@ -354,25 +359,52 @@ namespace GameStore
                         SqlDataAdapter da = new SqlDataAdapter();
                         DataTable ds = new DataTable();
                         da.SelectCommand = com;
-                        da.Fill(ds);
-                        if (ds.Rows[0].Field<int>("Counter") > 0)
+                        da.Fill(ds);/////////////////////////////
+                        List<DataRow> final = new List<DataRow>();
+
+                        foreach (DataRow user in ds.Rows)
                         {
-                            if (ds.Rows[0].Field<int>("Rented") == -1)
+                            MessageBox.Show("Entrei " + user.Field<int>("UserID").ToString() + receiverID.ToString());
+                            if (user.Field<int>("UserID") == receiverID)
+                            {
+                                MessageBox.Show("Entrei " + user.Field<int>("UserID").ToString() + receiverID.ToString());
+                                if (user.Field<int>("Counter") > 0)
+                                {
+                                    if (user.Field<int>("Rented") == -1)
+                                        error = false;
+                                    else
+                                        if (adminModeOn)
+                                        MessageBox.Show("O usuário " + user.Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
+                                    else
+                                        MessageBox.Show("Você não pode locar jogos.\n É necessário devolver antes de locar novamente.");
+                                }
+                                else
+                            if (adminModeOn)
+                                    MessageBox.Show("O usuário " + user.Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+                                else
+                                    MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+                            }
+                        }
+                        /*
+                        if (final[0].Field<int>("Counter") > 0)
+                        {
+                            if (final[0].Field<int>("Rented") == -1)
                                 error = false;
                             else
                                 if (adminModeOn)
-                                MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
+                                MessageBox.Show("O usuário " + final[0].Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
                             else
                                 MessageBox.Show("Você não pode locar jogos.\n É necessário devolver antes de locar novamente.");
                         }
                         else
                             if (adminModeOn)
-                            MessageBox.Show("O usuário " + ds.Rows[0].Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
+                            MessageBox.Show("O usuário " + final[0].Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
                         else
                             MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
-
+                        */
 
                     }
+                    
                     catch (Exception ex)
                     {
                         MessageBox.Show("Erro " + ex.Message);
