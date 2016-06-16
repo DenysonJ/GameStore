@@ -28,7 +28,7 @@ namespace GameStore
                 {
                     string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
                     SqlConnection connection = new SqlConnection(strcon);
-                    SqlCommand cmd = new SqlCommand("INSERT INTO UserTable (UserID, UserName, BirthDate, Password, email, Phone, List, Rented, History, Login, Counter) VALUES (MAX(UserID)+1,'" + name_textBox.Text + "','" + birthdate_dateTimePicker.Value.Date.ToString("yyyyMMdd") + "','" + password_textBox.Text + "','" +email_textBox.Text + "','"+ phone_textBox.Text + "','','','','" +Login_textBox.Text+ "',0);", connection);
+                    SqlCommand cmd = new SqlCommand("INSERT INTO UserTable (UserID, UserName, BirthDate, Password, email, Phone, List, Rented, History, Login, Counter) VALUES (MAX(UserID)+1,'" + name_textBox.Text + "','" + birthdate_dateTimePicker.Value.Date.ToString("yyyyMMdd") + "','" + password_textBox.Text + "','" +email_textBox.Text + "','"+ phone_textBox.Text + "','',-1,'','" +Login_textBox.Text+ "',0);", connection);
                     try
                     {
                         connection.Open();

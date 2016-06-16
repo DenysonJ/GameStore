@@ -21,10 +21,17 @@ namespace GameStore
 
             InitializeComponent();
 
+            if(User >= 0)
+            {
+                viewToolStripMenuItem.Visible = true;
+            }else
+            {
+                viewToolStripMenuItem.Visible = false;
+            }
 
             names = game_manager.LoadPlatformCombobox();
 
-            foreach(string name in names)
+            foreach (string name in names)
             {
                 platform_comboBox.Items.Add(name);
             }
@@ -45,12 +52,12 @@ namespace GameStore
 
             items = game_manager.LoadList(ref globalimageindex, ref imagens, ref indexer);
 
-            foreach(string image in imagens)
+            foreach (string image in imagens)
             {
-                if(image!="null")
+                if (image != "null")
                 {
                     Image cov = Image.FromFile(image);
-                    imageList1.Images.Add(cov); 
+                    imageList1.Images.Add(cov);
                 }
                 else
                 {
@@ -79,18 +86,19 @@ namespace GameStore
         private bool checkstatetobool(CheckState chk)
         {
             if (chk == CheckState.Checked)
-                return true; 
+                return true;
             else
-                return false; 
+                return false;
         }
 
         private bool availableTest(bool gameav, CheckState chkbox)
         {
-            return (!checkstatetobool(chkbox))||(gameav && checkstatetobool(chkbox));
+            return (!checkstatetobool(chkbox)) || (gameav && checkstatetobool(chkbox));
         }
 
 
-        private void ShowOnGameView(int gameid) {   //mostra o jogo no gameview a partir da gameid
+        private void ShowOnGameView(int gameid)
+        {   //mostra o jogo no gameview a partir da gameid
 
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection connection = new SqlConnection(strcon);
@@ -103,14 +111,14 @@ namespace GameStore
                 DataTable ds = new DataTable();
                 da.SelectCommand = cmd;
                 da.Fill(ds);
-                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"]};       //ao pegar a tabela da database ela perde a primary key
+                ds.PrimaryKey = new DataColumn[] { ds.Columns["GameID"] };       //ao pegar a tabela da database ela perde a primary key
                 DataRow game = ds.Rows.Find(gameid);
                 ListViewItem item = new ListViewItem();
 
                 item.ImageIndex = game.Field<int>("GameID");
                 item.SubItems.Add(game.Field<string>("Name"));
                 item.SubItems.Add(game.Field<int>("ReleaseYear").ToString());
-                item.SubItems.Add(game.Field<string>("Developer")); 
+                item.SubItems.Add(game.Field<string>("Developer"));
                 item.SubItems.Add(genreConverter(game.Field<int>("Genre")));
                 item.SubItems.Add(game.Field<string>("Description"));
 
@@ -127,7 +135,8 @@ namespace GameStore
             }
         }
 
-        private string genreConverter(int genr) { //traduz o gender de int pra string
+        private string genreConverter(int genr)
+        { //traduz o gender de int pra string
             string Genre = "";
             if (~(genr | (~Constants.game_type_action)) == 0x00)
                 Genre += "Ação ";
@@ -145,9 +154,9 @@ namespace GameStore
                 Genre += "Shooter ";
             if (~(genr | (~Constants.game_type_RPG)) == 0x00)
                 Genre += "RPG ";
-            
-            if(Genre == "")
-                 Genre = "none";
+
+            if (Genre == "")
+                Genre = "none";
 
             return Genre;
         }
@@ -196,7 +205,7 @@ namespace GameStore
         {
             if (txt_search.Text == "Digite o nome do jogo")
                 txt_search.Text = string.Empty;
-            
+
         }
 
         private void txt_search_Leave(object sender, EventArgs e)
@@ -376,16 +385,43 @@ namespace GameStore
             }
         }
 
-        private void emprestarJogoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 about = new AboutBox1();
 
             about.Show();
+        }
+
+        private void devolverJogoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int alugado = -1;
+            string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM UserTable WHERE UserID=" + user + ";", connection);
+            SqlCommand cm = new SqlCommand("UPDATE UserTable SET Rented=-1 WHERE UserID=" + user + ";", connection);
+            try
+            {
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataTable ds = new DataTable();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                alugado = ds.Rows[0].Field<int>("Rented");
+
+                cm.ExecuteNonQuery();
+                SqlCommand comm = new SqlCommand("UPDATE FisGameTable SET Available=1 WHERE FisGameID=" + alugado.ToString() + ";", connection);
+                comm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
     }
 }
