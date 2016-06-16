@@ -65,7 +65,6 @@ namespace GameStore
             string strcon = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\storeDatabase.mdf;Integrated Security=True";
             SqlConnection con = new SqlConnection(strcon);
             SqlCommand comm = new SqlCommand("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values (" + GameId.ToString() + ",'" + GameName + "','" + Developer_textBox.Text + "'," + int.Parse(ReleaseYear_textBox.Text).ToString()+ ",'" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName +"');", con);
-            MessageBox.Show("INSERT INTO GameTable (GameId, Name, Developer, ReleaseYear, Genre, Description, Image)  Values (" + GameId.ToString() + ",'" + GameName + "','" + Developer_textBox.Text + "'," + int.Parse(ReleaseYear_textBox.Text).ToString() + ",'" + genre + "','" + Description_textBox.Text + "','" + capa_openFileDialog.FileName + "');");
             try
             {
                 con.Open();

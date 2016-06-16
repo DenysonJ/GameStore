@@ -298,7 +298,7 @@ namespace GameStore
                 if (adminModeOn)
                 {
                     SqlConnection conn = new SqlConnection(strcon);
-                    SqlCommand comm = new SqlCommand("SELECT * FROM  UserTable WHERE Login=" + receiver_comboBox.Text + ";", conn);
+                    SqlCommand comm = new SqlCommand("SELECT * FROM  UserTable WHERE Login= '" + receiver_comboBox.Text + "';", conn);
                     try
                     {
                         conn.Open();
@@ -385,23 +385,6 @@ namespace GameStore
                                     MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
                             }
                         }
-                        /*
-                        if (final[0].Field<int>("Counter") > 0)
-                        {
-                            if (final[0].Field<int>("Rented") == -1)
-                                error = false;
-                            else
-                                if (adminModeOn)
-                                MessageBox.Show("O usuário " + final[0].Field<string>("Login") + " não pode locar jogos.\n É necessário devolver antes de locar novamente.");
-                            else
-                                MessageBox.Show("Você não pode locar jogos.\n É necessário devolver antes de locar novamente.");
-                        }
-                        else
-                            if (adminModeOn)
-                            MessageBox.Show("O usuário " + final[0].Field<string>("Login") + " não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
-                        else
-                            MessageBox.Show("Você não pode locar jogos.\n É necessário emprestar mais um jogo para continuar.");
-                        */
 
                     }
                     

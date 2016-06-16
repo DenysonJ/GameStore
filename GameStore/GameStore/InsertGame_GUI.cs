@@ -121,7 +121,7 @@ namespace GameStore
 
             //insere na FisGameTable
             SqlConnection conn = new SqlConnection(strcon);
-            SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values('" + FisGameId.ToString() + "','" +  GameId.ToString() +"','" + Platform_textBox.Text +"','"  +buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd")  + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text +"','"+ checkstatetobool(Available_checkBox.CheckState) + "');", conn);
+            SqlCommand com = new SqlCommand("Insert Into FisGameTable (FisGameId, GameId, Platform, BuyDate, Owner, Avaliation, Available) Values(" + FisGameId.ToString() + "," +  GameId.ToString() +",'" + Platform_textBox.Text +"','"  +buyDate_dateTimePicker.Value.Date.ToString("yyyyMMdd")  + "','" + owner_comboBox.SelectedIndex.ToString() + "','" + Avaliation_textBox.Text +"','"+ checkstatetobool(Available_checkBox.CheckState) + "');", conn);
             try
             {
                 conn.Open();
